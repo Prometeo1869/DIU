@@ -1,0 +1,9 @@
+#add {
+-fx-base: #c4edb2;
+}
+#eliminar {
+-fx-base: red;
+}
+#progreso {
+-fx-margin: 100px 0 0 0;
+}
