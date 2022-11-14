@@ -23,7 +23,7 @@ public class Cliente {
     private final StringProperty provincia;
 
     /**
-     * Constructor, full param.
+     * Constructor, all parameters.
      *
      * @param dni
      * @param nombre

@@ -15,16 +15,16 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.hotel.controller.VPOverviewController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.hotel.controller.VPOverviewController">
    <children>
       <SplitPane dividerPositions="0.35964912280701755" layoutX="78.0" layoutY="67.0" prefHeight="580.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView layoutX="42.0" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="clienteTable" layoutX="42.0" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="APELLIDOS" />
-                      <TableColumn prefWidth="75.0" text="NOMBRE" />
+                      <TableColumn fx:id="apellidoColumn" editable="false" prefWidth="75.0" text="APELLIDOS" />
+                      <TableColumn fx:id="nombreColumn" prefWidth="75.0" text="NOMBRE" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -90,13 +90,13 @@
                                     <Label text="APELLIDOS:" GridPane.rowIndex="2" />
                                     <Label text="DIRECCIÓN:" GridPane.rowIndex="3" />
                                     <Label text="LOCALIDAD:" GridPane.rowIndex="4" />
-                                    <Label text="PROVINCIAS:" GridPane.rowIndex="5" />
-                                    <Label text="Label" GridPane.columnIndex="1" />
-                                    <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Label text="PROVINCIA:" GridPane.rowIndex="5" />
+                                    <Label fx:id="dniLabel" text="Label" GridPane.columnIndex="1" />
+                                    <Label fx:id="nombreLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label fx:id="apellidoLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="direccionLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label fx:id="localidadLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label fx:id="provinciaLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <Button alignment="CENTER" mnemonicParsing="false" text="RESERVAS" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
                                        <GridPane.margin>
                                           <Insets right="20.0" />
