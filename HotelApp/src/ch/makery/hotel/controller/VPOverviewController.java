@@ -3,6 +3,7 @@ package ch.makery.hotel.controller;
 import ch.makery.hotel.Main;
 import ch.makery.hotel.model.Cliente;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -82,6 +83,52 @@ public class VPOverviewController {
             direccionLabel.setText("");
             localidadLabel.setText("");
             provinciaLabel.setText("");
+        }
+    }
+    @FXML
+    private void pulsarEliminarCliente() {
+        int posicion = clienteTable.getSelectionModel().getSelectedIndex();
+        if(posicion >= 0) {
+            clienteTable.getItems().remove(posicion);
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ningún Cliente Seleccionado");
+            alert.setContentText("Por favor, seleccine algún cliente para borrarlo");
+            alert.showAndWait();
+        }
+    }
+    /**
+     * Called when the user clicks the new button. Opens a dialog to edit
+     * details for a new cliente.
+     */
+    @FXML
+    private void pulsarCrearCliente() {
+        Cliente tempCliente = new Cliente();
+        boolean okClicked = main.mostrarClienteEditDialog(tempCliente);
+        if (okClicked) {
+            main.getClienteData().add(tempCliente);
+        }
+    }
+
+    /**
+     * Called when the user clicks the edit button. Opens a dialog to edit
+     * details for the selected person.
+     */
+    @FXML
+    private void pulsarModificarCliente() {
+        Cliente selectedCliente = clienteTable.getSelectionModel().getSelectedItem();
+        if (selectedCliente != null) {
+            boolean okClicked = main.mostrarClienteEditDialog(selectedCliente);
+            if (okClicked) {
+                mostrarClienteDetalle(selectedCliente);
+            }
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ningún Cliente Seleccionado");
+            alert.setContentText("Por favor, seleccine algún cliente para editarlo");
+            alert.showAndWait();
         }
     }
     public void setMain(Main main) {

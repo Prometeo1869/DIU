@@ -1,5 +1,6 @@
 package ch.makery.hotel;
 
+import ch.makery.hotel.controller.ClienteEditController;
 import ch.makery.hotel.controller.VPOverviewController;
 import ch.makery.hotel.model.Cliente;
 import javafx.application.Application;
@@ -9,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,7 +29,6 @@ public class Main extends Application {
         clienteData.add(new Cliente("88555222H", "Manuel", "Gonzalez Luque", "Calle Boquerón, 34 1º A", "Fuengirola", "Málaga"));
         clienteData.add(new Cliente("99888777J", "Miguel", "Alarcón García", "Av. Andalucia, 47 2º F", "Écija", "Sevilla"));
     }
-
     /**
      * Returns the data as an observable list of Clientes.
      * @return
@@ -44,7 +45,6 @@ public class Main extends Application {
 
         showVPOverview();
     }
-
     /**
      * Initializes the root layout.
      */
@@ -63,7 +63,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-
     /**
      * Shows the principal view inside the root layout.
      */
@@ -85,8 +84,43 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+    /**
+     * Opens a dialog to edit details for the specified cliente. If the user
+     * clicks OK, the changes are saved into the provided cliente object and true
+     * is returned.
+     *
+     * @param cliente the cliente object to be edited
+     * @return true if the user clicked OK, false otherwise.
+     */
+    public boolean mostrarClienteEditDialog(Cliente cliente) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/ClienteEditDialog.fxml"));
+            AnchorPane page = loader.load();
 
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Editar cliente");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
 
+            // Set the cliente into the controller.
+            ClienteEditController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setPerson(cliente);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public static void main(String[] args) {
         launch(args);
     }
