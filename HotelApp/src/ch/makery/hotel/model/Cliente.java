@@ -15,12 +15,12 @@ import javafx.beans.property.StringProperty;
  */
 public class Cliente {
 
-    private final StringProperty dni;
-    private final StringProperty nombre;
-    private final StringProperty apellidos;
-    private final StringProperty direccion;
-    private final StringProperty localidad;
-    private final StringProperty provincia;
+    private StringProperty dni;
+    private StringProperty nombre;
+    private StringProperty apellidos;
+    private StringProperty direccion;
+    private StringProperty localidad;
+    private StringProperty provincia;
 
     /**
      * Constructor, all parameters.
@@ -40,7 +40,11 @@ public class Cliente {
         this.localidad = new SimpleStringProperty(localidad);
         this.provincia = new SimpleStringProperty(provincia);
     }
-
+    /**
+     * Constructor, empty
+     */
+    public Cliente() {
+    }
     // SETTERS & GETTERS
     public String getDni() {return dni.get();}
 

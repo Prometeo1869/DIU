@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.hotel.controller.ClienteEditController">
+   <children>
+      <GridPane layoutX="42.0" layoutY="40.0" prefHeight="294.0" prefWidth="462.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="80.0">
+         <children>
+            <Label text="DNI:" />
+            <Label text="NOMBRE:" GridPane.rowIndex="1" />
+            <Label text="APELLIDOS:" GridPane.rowIndex="2" />
+            <Label text="DIRECCIÓN:" GridPane.rowIndex="3" />
+            <Label text="LOCALIDAD:" GridPane.rowIndex="4" />
+            <Label text="PROVINCIA:" GridPane.rowIndex="5" />
+            <TextField fx:id="dniTxtField" GridPane.columnIndex="1" />
+            <TextField fx:id="nombreTxtField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="apellidoTxtField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="direccionTxtField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="localidadTxtField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="provinciaTxtField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="112.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="395.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="332.0" layoutY="322.0" mnemonicParsing="false" onAction="#guardarCambios" text="Aceptar" />
+      <Button alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="435.0" layoutY="322.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="25.0" prefWidth="76.0" text="Cancelar" AnchorPane.bottomAnchor="53.0" AnchorPane.topAnchor="322.0" />
+   </children>
+</AnchorPane>

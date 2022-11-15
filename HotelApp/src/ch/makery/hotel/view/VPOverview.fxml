@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
@@ -37,9 +42,9 @@
                      <bottom>
                         <Group BorderPane.alignment="CENTER_LEFT">
                            <children>
-                              <Button layoutX="204.0" layoutY="518.0" mnemonicParsing="false" text="MODIFICAR" />
-                              <Button layoutX="66.0" layoutY="518.0" mnemonicParsing="false" text="CREAR" />
-                              <Button layoutX="355.0" layoutY="518.0" mnemonicParsing="false" text="ELIMINAR" />
+                              <Button layoutX="204.0" layoutY="518.0" mnemonicParsing="false" onAction="#pulsarModificarCliente" text="MODIFICAR" />
+                              <Button layoutX="66.0" layoutY="518.0" mnemonicParsing="false" onAction="#pulsarCrearCliente" text="CREAR" />
+                              <Button layoutX="355.0" layoutY="518.0" mnemonicParsing="false" onAction="#pulsarEliminarCliente" text="ELIMINAR" />
                            </children>
                            <BorderPane.margin>
                               <Insets bottom="10.0" left="20.0" />
