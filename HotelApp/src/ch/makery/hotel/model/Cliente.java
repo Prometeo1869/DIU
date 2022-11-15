@@ -1,10 +1,5 @@
 package ch.makery.hotel.model;
 
-
-import java.time.LocalDate;
-
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -44,6 +39,12 @@ public class Cliente {
      * Constructor, empty
      */
     public Cliente() {
+        this.dni = new SimpleStringProperty("");
+        this.nombre = new SimpleStringProperty("");
+        this.apellidos = new SimpleStringProperty("");
+        this.direccion = new SimpleStringProperty("");
+        this.localidad = new SimpleStringProperty("");
+        this.provincia = new SimpleStringProperty("");
     }
     // SETTERS & GETTERS
     public String getDni() {return dni.get();}

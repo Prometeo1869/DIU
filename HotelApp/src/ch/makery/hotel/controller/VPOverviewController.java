@@ -8,8 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.util.Arrays;
-
 public class VPOverviewController {
 
     @FXML
@@ -136,6 +134,10 @@ public class VPOverviewController {
         // Add obsevable list data to the table
         clienteTable.setItems(main.getClienteData());
 
+        ordenar();
+    }
+
+    public void ordenar() {
         // Order by apellido.
         apellidoColumn.setSortType(TableColumn.SortType.ASCENDING);
         clienteTable.getSortOrder().addAll(apellidoColumn);

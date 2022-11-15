@@ -4,8 +4,7 @@ import ch.makery.hotel.model.Cliente;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-
-import java.awt.*;
+import javafx.scene.control.TextField;
 
 /**
  * Dialog to edit details of a Cliente
@@ -73,7 +72,7 @@ public class ClienteEditController {
     @FXML
     private void guardarCambios() {
         if (isInputValid()) {
-            cliente.setDni(dniTxtField.getText());
+            cliente.setDni(dniTxtField.getText().toUpperCase());
             cliente.setApellidos(apellidoTxtField.getText());
             cliente.setNombre(nombreTxtField.getText());
             cliente.setDireccion(direccionTxtField.getText());
@@ -81,6 +80,7 @@ public class ClienteEditController {
             cliente.setProvincia(provinciaTxtField.getText());
 
             okClicked = true;
+
             dialogStage.close();
         }
     }
@@ -103,9 +103,15 @@ public class ClienteEditController {
             errorMessage += "¡DNI no válido!\n";
         } else {
             String dni = dniTxtField.getText();
-            for (int i = 0; i < dni.length() - 1; i++) {
-                if(!Character.isDigit(dni.charAt(i))) {
-                    errorMessage = "¡Formato de DNI incorrecto!\n(Formato: 00000000X)";
+            for (int i = 0; i < dni.length(); i++) {
+                if(i<8) {
+                    if (!Character.isDigit(dni.charAt(i))) {
+                        errorMessage = "¡Formato de DNI incorrecto!\n(Formato: 00000000X)";
+                    }
+                } else {
+                    if (!Character.isLetter(dni.charAt(8))) {
+                        errorMessage = "¡Formato de DNI incorrecto!\n(Formato: 00000000X)";
+                    }
                 }
             }
         }
@@ -136,6 +142,5 @@ public class ClienteEditController {
             return false;
         }
     }
-
 
 }

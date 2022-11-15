@@ -42,7 +42,6 @@ public class Main extends Application {
         this.primaryStage.setTitle("Hotel");
 
         initRootLayout();
-
         showVPOverview();
     }
     /**
@@ -97,14 +96,14 @@ public class Main extends Application {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/ClienteEditDialog.fxml"));
-            AnchorPane page = loader.load();
+            AnchorPane editPage = loader.load();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Editar cliente");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
+            Scene scene = new Scene(editPage);
             dialogStage.setScene(scene);
 
             // Set the cliente into the controller.
@@ -112,7 +111,7 @@ public class Main extends Application {
             controller.setDialogStage(dialogStage);
             controller.setPerson(cliente);
 
-            // Show the dialog and wait until the user closes it
+            // Show the dialog and wait until the user closes it.
             dialogStage.showAndWait();
 
             return controller.isOkClicked();
