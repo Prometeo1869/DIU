@@ -2,6 +2,8 @@ package ch.makery.hotel.controller;
 
 import ch.makery.hotel.Main;
 import ch.makery.hotel.model.Cliente;
+import ch.makery.hotel.model.ClienteModelo;
+import ch.makery.hotel.model.ExceptionCliente;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -32,7 +34,7 @@ public class VPOverviewController {
 
     //Reference to the Main
     private Main main;
-
+    private ClienteModelo modelo;
     /**
      * Constructor
      */
@@ -84,10 +86,14 @@ public class VPOverviewController {
         }
     }
     @FXML
-    private void pulsarEliminarCliente() {
+    private void pulsarEliminarCliente() throws ExceptionCliente {
         int posicion = clienteTable.getSelectionModel().getSelectedIndex();
+        String dni = clienteTable.getItems().get(posicion).getDni();
         if(posicion >= 0) {
+            // BORRA DE LA APP
             clienteTable.getItems().remove(posicion);
+            // BORRA DE LA BASE DE DATOS
+            modelo.getRep().deleteCliente(dni);
         } else {
             // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -101,25 +107,30 @@ public class VPOverviewController {
      * details for a new cliente.
      */
     @FXML
-    private void pulsarCrearCliente() {
+    private void pulsarCrearCliente() throws ExceptionCliente {
         Cliente tempCliente = new Cliente();
         boolean okClicked = main.mostrarClienteEditDialog(tempCliente);
         if (okClicked) {
             main.getClienteData().add(tempCliente);
+            // AÑADE A LA BASE DE DATOS
+            modelo.getRep().addCliente(tempCliente);
+
+            this.ordenar();
         }
     }
-
     /**
      * Called when the user clicks the edit button. Opens a dialog to edit
      * details for the selected person.
      */
     @FXML
-    private void pulsarModificarCliente() {
+    private void pulsarModificarCliente() throws ExceptionCliente {
         Cliente selectedCliente = clienteTable.getSelectionModel().getSelectedItem();
         if (selectedCliente != null) {
             boolean okClicked = main.mostrarClienteEditDialog(selectedCliente);
             if (okClicked) {
                 mostrarClienteDetalle(selectedCliente);
+                modelo.getRep().editCliente(selectedCliente);
+                this.ordenar();
             }
         } else {
             // Nothing selected.
@@ -136,10 +147,12 @@ public class VPOverviewController {
 
         ordenar();
     }
-
     public void ordenar() {
         // Order by apellido.
         apellidoColumn.setSortType(TableColumn.SortType.ASCENDING);
         clienteTable.getSortOrder().addAll(apellidoColumn);
+    }
+    public void setClienteModelo(ClienteModelo modelo) {
+        this.modelo = modelo;
     }
 }

@@ -2,13 +2,10 @@ package ch.makery.address.util;
 
 import ch.makery.address.model.Person;
 import ch.makery.address.model.PersonVO;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
+
 
 public class PersonConvert {
 

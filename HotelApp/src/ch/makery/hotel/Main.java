@@ -3,6 +3,9 @@ package ch.makery.hotel;
 import ch.makery.hotel.controller.ClienteEditController;
 import ch.makery.hotel.controller.VPOverviewController;
 import ch.makery.hotel.model.Cliente;
+import ch.makery.hotel.model.ClienteModelo;
+import ch.makery.hotel.model.ExceptionCliente;
+import ch.makery.hotel.model.repository.impl.ClienteRepositoryImpl;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,32 +21,50 @@ import java.io.IOException;
 public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
+
+    private ClienteModelo modelo;
+    private ClienteRepositoryImpl repository;
     /**
      * The data as an observable list of Clientes.
      */
     private ObservableList<Cliente> clienteData = FXCollections.observableArrayList();
 
-    public Main() {
-        clienteData.add(new Cliente("11555444F", "Silvia", "Zafra Abad", "Calle Parra, 1 1º B", "La Carlota", "Córdoba"));
-        clienteData.add(new Cliente("28821684Q", "Juan", "Cebrián Pareja", "Calle Urquiza, 6 4º B", "Sevilla", "Sevilla"));
-        clienteData.add(new Cliente("88555222H", "Manuel", "Gonzalez Luque", "Calle Boquerón, 34 1º A", "Fuengirola", "Málaga"));
-        clienteData.add(new Cliente("99888777J", "Miguel", "Alarcón García", "Av. Andalucia, 47 2º F", "Écija", "Sevilla"));
+    /**
+     *
+     *
+     * @throws ExceptionCliente
+     */
+    public Main() throws ExceptionCliente {
+        try {
+            this.modelo = new ClienteModelo();
+            this.repository = new ClienteRepositoryImpl();
+            modelo.setRep(this.repository);
+            for (Cliente c : modelo.obtenerClientes()) {
+                clienteData.add(c);
+            }
+        } catch (ExceptionCliente e) {
+            throw new ExceptionCliente("No se conecta");
+        }
     }
+
     /**
      * Returns the data as an observable list of Clientes.
+     *
      * @return
      */
     public ObservableList<Cliente> getClienteData() {
         return clienteData;
     }
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Hotel");
 
         initRootLayout();
         showVPOverview();
     }
+
     /**
      * Initializes the root layout.
      */
@@ -62,6 +83,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+
     /**
      * Shows the principal view inside the root layout.
      */
@@ -78,11 +100,13 @@ public class Main extends Application {
             //Give the controller access to the Main.
             VPOverviewController controller = loader.getController();
             controller.setMain(this);
+            controller.setClienteModelo(this.modelo);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     /**
      * Opens a dialog to edit details for the specified cliente. If the user
      * clicks OK, the changes are saved into the provided cliente object and true
@@ -120,6 +144,7 @@ public class Main extends Application {
             return false;
         }
     }
+
     public static void main(String[] args) {
         launch(args);
     }

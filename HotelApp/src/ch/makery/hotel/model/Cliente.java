@@ -82,4 +82,6 @@ public class Cliente {
     public StringProperty provinciaProperty() {return provincia;}
 
     public void setProvincia(String provincia) {this.provincia.set(provincia);}
+
+
 }

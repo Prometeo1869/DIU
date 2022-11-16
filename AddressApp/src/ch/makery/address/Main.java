@@ -106,14 +106,12 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         // Try to load last opened person file.
         File file = getPersonFilePath();
         if (file != null) {
             loadPersonDataFromFile(file);
         }
     }
-
     /**
      * Shows the person overview inside the root layout.
      */
