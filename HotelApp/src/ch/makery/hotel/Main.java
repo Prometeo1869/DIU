@@ -2,6 +2,7 @@ package ch.makery.hotel;
 
 import ch.makery.hotel.controller.ClienteEditController;
 import ch.makery.hotel.controller.VPOverviewController;
+import ch.makery.hotel.controller.VROverviewController;
 import ch.makery.hotel.model.Cliente;
 import ch.makery.hotel.model.ClienteModelo;
 import ch.makery.hotel.model.ExceptionCliente;
@@ -62,7 +63,7 @@ public class Main extends Application {
         this.primaryStage.setTitle("Hotel");
 
         initRootLayout();
-        showVPOverview();
+        mostrarVPOverview();
     }
 
     /**
@@ -73,7 +74,7 @@ public class Main extends Application {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
+            rootLayout = loader.load();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -87,7 +88,7 @@ public class Main extends Application {
     /**
      * Shows the principal view inside the root layout.
      */
-    public void showVPOverview() {
+    public void mostrarVPOverview() {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -133,7 +134,37 @@ public class Main extends Application {
             // Set the cliente into the controller.
             ClienteEditController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setPerson(cliente);
+            controller.setCliente(cliente);
+
+            // Show the dialog and wait until the user closes it.
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean mostrarReservas(Cliente selectedCliente) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/VROverview.fxml"));
+            AnchorPane editPage = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Reservas");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(editPage);
+            dialogStage.setScene(scene);
+
+            // Set the cliente into the controller.
+            ClienteEditController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setCliente(selectedCliente);
 
             // Show the dialog and wait until the user closes it.
             dialogStage.showAndWait();

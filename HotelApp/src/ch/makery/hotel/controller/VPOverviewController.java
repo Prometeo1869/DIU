@@ -140,6 +140,22 @@ public class VPOverviewController {
             alert.showAndWait();
         }
     }
+    @FXML
+    private void pulsarReservas() throws ExceptionCliente {
+        Cliente selectedCliente = clienteTable.getSelectionModel().getSelectedItem();
+        if(selectedCliente != null) {
+            boolean okClicked = main.mostrarReservas(selectedCliente);
+            if(okClicked) {
+    /////////////////////////////////////////////////////////////////////////
+            }
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ningún Cliente Seleccionado");
+            alert.setContentText("Seleccione un cliente para ver sus reservas");
+            alert.showAndWait();
+        }
+    }
     public void setMain(Main main) {
         this.main = main;
         // Add obsevable list data to the table

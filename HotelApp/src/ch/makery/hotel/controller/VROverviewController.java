@@ -1,4 +1,4 @@
 package ch.makery.hotel.controller;
 
-public class VRController {
+public class VROverviewController {
 }

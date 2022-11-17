@@ -102,7 +102,7 @@
                                     <Label fx:id="direccionLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <Label fx:id="localidadLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <Label fx:id="provinciaLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <Button alignment="CENTER" mnemonicParsing="false" text="RESERVAS" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#pulsarReservas" text="RESERVAS" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
                                        <GridPane.margin>
                                           <Insets right="20.0" />
                                        </GridPane.margin>

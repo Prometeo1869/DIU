@@ -46,7 +46,7 @@ public class ClienteEditController {
         this.dialogStage = dialogStage;
     }
 
-    public void setPerson(Cliente cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
 
         dniTxtField.setText(cliente.getDni());
