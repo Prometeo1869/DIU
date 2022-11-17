@@ -5,10 +5,7 @@ import ch.makery.hotel.model.Cliente;
 import ch.makery.hotel.model.ClienteModelo;
 import ch.makery.hotel.model.ExceptionCliente;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 public class VPOverviewController {
 
@@ -31,10 +28,13 @@ public class VPOverviewController {
     private Label localidadLabel;
     @FXML
     private Label provinciaLabel;
+    @FXML
+    private TextField buscarDniTxtField;
 
     //Reference to the Main
     private Main main;
     private ClienteModelo modelo;
+    private VROverviewController controllerReservas;
     /**
      * Constructor
      */
@@ -142,11 +142,12 @@ public class VPOverviewController {
     }
     @FXML
     private void pulsarReservas() throws ExceptionCliente {
+
         Cliente selectedCliente = clienteTable.getSelectionModel().getSelectedItem();
         if(selectedCliente != null) {
             boolean okClicked = main.mostrarReservas(selectedCliente);
             if(okClicked) {
-    /////////////////////////////////////////////////////////////////////////
+
             }
         } else {
             // Nothing selected.
@@ -170,5 +171,17 @@ public class VPOverviewController {
     }
     public void setClienteModelo(ClienteModelo modelo) {
         this.modelo = modelo;
+    }
+
+    public void buscarDni() throws ExceptionCliente {
+        for(Cliente c: modelo.obtenerClientes()) {
+            if(c.getDni().equals(buscarDniTxtField.getText())) {
+                //////////////////////////////////////////////////////////////////////////////////
+               /* int indice = main.getClienteData().indexOf(c);
+                clienteTable.setSelectionModel(main.getClienteData().indexOf(c));*/
+                this.mostrarClienteDetalle(c);
+                break;
+            }
+        }
     }
 }

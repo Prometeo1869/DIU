@@ -151,20 +151,21 @@ public class Main extends Application {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/VROverview.fxml"));
-            AnchorPane editPage = loader.load();
+            AnchorPane reservasPage = loader.load();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Reservas");
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(editPage);
+            Scene scene = new Scene(reservasPage);
             dialogStage.setScene(scene);
 
             // Set the cliente into the controller.
-            ClienteEditController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
+            VROverviewController controller = loader.getController();
             controller.setCliente(selectedCliente);
+            controller.mostrarDatosCliente(selectedCliente);
+
 
             // Show the dialog and wait until the user closes it.
             dialogStage.showAndWait();

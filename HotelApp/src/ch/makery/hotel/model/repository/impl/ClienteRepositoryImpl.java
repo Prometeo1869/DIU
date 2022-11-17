@@ -39,12 +39,7 @@ public class ClienteRepositoryImpl {
             }
 
             this.conexion.desconectarBD(conn);
-//            clientes.sort(new Comparator<Cliente>() {
-//                @Override
-//                public int compare(Cliente o1, Cliente o2) {
-//                    return o1.getApellidos().compareToIgnoreCase(o2.getApellidos());
-//                }
-//            });
+
             return this.clientes;
         } catch (SQLException var6) {
             throw new ExceptionCliente("No se ha podido obtener la lista de clientes");
