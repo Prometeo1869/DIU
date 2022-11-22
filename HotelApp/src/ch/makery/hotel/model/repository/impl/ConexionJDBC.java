@@ -15,7 +15,7 @@ public class ConexionJDBC {
      */
     public Connection conectarBD() throws SQLException {
         try {           //OJO CON EL PUERTO PARA CONECTAR EN CASA: localhost:3307 // EN CLASE: localhost (sin puerto)
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/hotel?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Class.forName("com.mysql.cj.jdbc.Driver");
             return conn;
         } catch (SQLException var2) {

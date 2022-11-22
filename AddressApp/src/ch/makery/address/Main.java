@@ -30,7 +30,6 @@ public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<Person> personData = FXCollections.observableArrayList();
-
     PersonRepositoryImpl rep;
     PersonModelo person;
 

@@ -6,6 +6,7 @@ import ch.makery.hotel.model.ClienteModelo;
 import ch.makery.hotel.model.ExceptionCliente;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 
 public class VPOverviewController {
 
@@ -15,9 +16,12 @@ public class VPOverviewController {
     private TableColumn<Cliente, String> nombreColumn;
     @FXML
     private TableColumn<Cliente, String> apellidoColumn;
-
+    @FXML
+    private GridPane detalles;
     @FXML
     private Label dniLabel;
+    @FXML
+    private Label datosTitulo;
     @FXML
     private Label nombreLabel;
     @FXML
@@ -68,6 +72,8 @@ public class VPOverviewController {
      */
     private void mostrarClienteDetalle(Cliente cliente) {
         if(cliente != null) {
+            detalles.setVisible(true);
+            datosTitulo.setVisible(true);
             // Fill the labels with info from the cliente object.
             dniLabel.setText(cliente.getDni());
             nombreLabel.setText(cliente.getNombre());
@@ -146,9 +152,6 @@ public class VPOverviewController {
         Cliente selectedCliente = clienteTable.getSelectionModel().getSelectedItem();
         if(selectedCliente != null) {
             boolean okClicked = main.mostrarReservas(selectedCliente);
-            if(okClicked) {
-
-            }
         } else {
             // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -174,14 +177,21 @@ public class VPOverviewController {
     }
 
     public void buscarDni() throws ExceptionCliente {
+        boolean flag = false;
         for(Cliente c: modelo.obtenerClientes()) {
             if(c.getDni().equals(buscarDniTxtField.getText())) {
-                //////////////////////////////////////////////////////////////////////////////////
-               /* int indice = main.getClienteData().indexOf(c);
-                clienteTable.setSelectionModel(main.getClienteData().indexOf(c));*/
+                flag = true;
+                main.mostrarReservas(c);
                 this.mostrarClienteDetalle(c);
                 break;
             }
+        }
+        if (!flag) {
+            buscarDniTxtField.setText("");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("DNI NO ENCONTRADO");
+            alert.setContentText("No existe ningún cliente con ese DNI");
+            alert.showAndWait();
         }
     }
 }

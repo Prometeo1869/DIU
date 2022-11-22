@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
@@ -61,7 +66,7 @@
                      <center>
                         <Group BorderPane.alignment="CENTER">
                            <children>
-                              <Label layoutX="190.0" layoutY="3.0" style="-fx-font-weight: bold;" text="DATOS DEL CLIENTE" textAlignment="CENTER">
+                              <Label fx:id="datosTitulo" layoutX="190.0" layoutY="3.0" style="-fx-font-weight: bold;" text="DATOS DEL CLIENTE" textAlignment="CENTER" visible="false">
                                  <padding>
                                     <Insets bottom="10.0" />
                                  </padding>
@@ -71,7 +76,7 @@
                                     <Insets top="5.0" />
                                  </padding>
                               </Separator>
-                              <GridPane layoutX="32.0" layoutY="30.0" prefHeight="294.0" prefWidth="462.0">
+                              <GridPane fx:id="detalles" layoutX="32.0" layoutY="30.0" prefHeight="294.0" prefWidth="462.0" visible="false">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="112.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="395.0" />
