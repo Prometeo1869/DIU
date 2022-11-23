@@ -1,4 +1,4 @@
-package ch.makery.hotel.model;
+package ch.makery.hotel.util;
 
 public enum Tipo {
     INDIVIDUAL("Doble de uso individual", 20),

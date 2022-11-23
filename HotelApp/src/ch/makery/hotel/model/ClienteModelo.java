@@ -1,20 +1,20 @@
 package ch.makery.hotel.model;
 
-import ch.makery.hotel.model.repository.impl.ClienteRepositoryImpl;
+import ch.makery.hotel.model.repository.ClienteRepository;
 
 import java.util.ArrayList;
 
 public class ClienteModelo {
 
-    ClienteRepositoryImpl rep;
+    ClienteRepository rep;
 
-    public ClienteRepositoryImpl getRep() {
+    public ClienteRepository getRep() {
         return rep;
     }
-    public void setRep(ClienteRepositoryImpl rep) {
+    public void setRep(ClienteRepository rep) {
         this.rep = rep;
     }
-    public ArrayList<Cliente> obtenerClientes() throws ExceptionCliente {
+    public ArrayList<ClienteVO> obtenerClientes() throws ExceptionCliente {
         return this.rep.ObtenerListaClientes();
     }
 }

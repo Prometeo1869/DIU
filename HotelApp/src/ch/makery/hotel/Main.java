@@ -5,14 +5,15 @@ import ch.makery.hotel.controller.VPOverviewController;
 import ch.makery.hotel.controller.VROverviewController;
 import ch.makery.hotel.model.Cliente;
 import ch.makery.hotel.model.ClienteModelo;
+import ch.makery.hotel.model.ClienteVO;
 import ch.makery.hotel.model.ExceptionCliente;
 import ch.makery.hotel.model.repository.impl.ClienteRepositoryImpl;
+import ch.makery.hotel.util.Convert;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -41,8 +42,9 @@ public class Main extends Application {
             this.modelo = new ClienteModelo();
             this.repository = new ClienteRepositoryImpl();
             modelo.setRep(this.repository);
-            for (Cliente c : modelo.obtenerClientes()) {
-                clienteData.add(c);
+            for (ClienteVO c : modelo.obtenerClientes()) {
+                Cliente nuevo = Convert.convertTo(c);
+                clienteData.add(nuevo);
             }
         } catch (ExceptionCliente e) {
             throw new ExceptionCliente("No se conecta");

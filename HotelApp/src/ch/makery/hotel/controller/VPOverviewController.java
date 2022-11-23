@@ -3,7 +3,9 @@ package ch.makery.hotel.controller;
 import ch.makery.hotel.Main;
 import ch.makery.hotel.model.Cliente;
 import ch.makery.hotel.model.ClienteModelo;
+import ch.makery.hotel.model.ClienteVO;
 import ch.makery.hotel.model.ExceptionCliente;
+import ch.makery.hotel.util.Convert;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -178,7 +180,8 @@ public class VPOverviewController {
 
     public void buscarDni() throws ExceptionCliente {
         boolean flag = false;
-        for(Cliente c: modelo.obtenerClientes()) {
+        for(ClienteVO cvo: modelo.obtenerClientes()) {
+            Cliente c = Convert.convertTo(cvo);
             if(c.getDni().equals(buscarDniTxtField.getText())) {
                 flag = true;
                 main.mostrarReservas(c);

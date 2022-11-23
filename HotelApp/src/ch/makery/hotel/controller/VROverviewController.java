@@ -2,12 +2,22 @@ package ch.makery.hotel.controller;
 
 import ch.makery.hotel.Main;
 import ch.makery.hotel.model.Cliente;
+import ch.makery.hotel.model.Reserva;
 import javafx.fxml.FXML;
-import javafx.stage.Stage;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+
+import java.sql.Date;
 
 public class VROverviewController {
 
+    @FXML
+    private TableView<Reserva> reservaTable;
+    @FXML
+    private TableColumn<Reserva, Integer> codigoColumn;
+    @FXML
+    private TableColumn<Reserva, Date> fechaColumn;
     @FXML
     private TextField dniTxt;
     @FXML
@@ -38,7 +48,8 @@ public class VROverviewController {
      */
     @FXML
     private void initialize() {
-
+        // Initialize the reservaTable with the two Columns
+        //codigoColumn.setCellFactory(c -> c.getValue());
     }
 
     public void mostrarDatosCliente(Cliente cliente) {
@@ -55,8 +66,9 @@ public class VROverviewController {
 
     public void setCliente(Cliente selectedCliente) {
         this.cliente = selectedCliente;
-
     }
+
+
 
     public boolean isOkClicked() {
         return true;

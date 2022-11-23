@@ -1,25 +1,27 @@
 package ch.makery.hotel.model.repository.impl;
 
 import ch.makery.hotel.model.Cliente;
+import ch.makery.hotel.model.ClienteVO;
 import ch.makery.hotel.model.ExceptionCliente;
+import ch.makery.hotel.model.repository.ClienteRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class ClienteRepositoryImpl {
+public class ClienteRepositoryImpl implements ClienteRepository {
     private final ConexionJDBC conexion = new ConexionJDBC();
     private Statement stmt;
     private String sentencia;
-    private ArrayList<Cliente> clientes;
-    private Cliente cliente;
+    private ArrayList<ClienteVO> clientes;
+    private ClienteVO cliente;
 
     /**
      *
      * @return
      * @throws ExceptionCliente
      */
-    public ArrayList<Cliente> ObtenerListaClientes() throws ExceptionCliente {
+    public ArrayList<ClienteVO> ObtenerListaClientes() throws ExceptionCliente {
         try {
             Connection conn = this.conexion.conectarBD();
             this.clientes = new ArrayList();
@@ -34,7 +36,7 @@ public class ClienteRepositoryImpl {
                 String dieccion = rs.getString("direccion");
                 String localidad = rs.getString("localidad");
                 String provincia = rs.getString("provincia");
-                this.cliente = new Cliente(dni, nombre, apellidos, dieccion, localidad, provincia);
+                this.cliente = new ClienteVO(dni, nombre, apellidos, dieccion, localidad, provincia);
                 clientes.add(this.cliente);
             }
 
