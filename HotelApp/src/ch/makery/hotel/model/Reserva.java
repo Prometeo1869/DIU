@@ -5,22 +5,23 @@ import ch.makery.hotel.util.Tipo;
 import javafx.beans.property.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Reserva {
 
     private IntegerProperty codigo;
     private StringProperty cliente;
-    private ObjectProperty<Date> fechaLlegada;
-    private ObjectProperty<Date> fechaSalida;
+    private ObjectProperty<LocalDate> fechaLlegada;
+    private ObjectProperty<LocalDate> fechaSalida;
     private ObjectProperty<Tipo> tipo;
     private BooleanProperty fumador;
     private ObjectProperty<Regimen> alojamiento;
 
-    public Reserva(Integer codigo, String cliente, Date fechaLlegada, Date fechaSalida, Tipo tipo, boolean fumador, Regimen alojamiento) {
+    public Reserva(Integer codigo, String cliente, LocalDate fechaLlegada, LocalDate fechaSalida, Tipo tipo, boolean fumador, Regimen alojamiento) {
         this.codigo = new SimpleIntegerProperty(codigo);
         this.cliente = new SimpleStringProperty(cliente);
-        this.fechaLlegada = new SimpleObjectProperty<Date>(fechaLlegada);
-        this.fechaSalida = new SimpleObjectProperty<Date>(fechaSalida);
+        this.fechaLlegada = new SimpleObjectProperty<LocalDate>(LocalDate.parse(fechaLlegada.toString()));
+        this.fechaSalida = new SimpleObjectProperty<LocalDate>(LocalDate.parse(fechaSalida.toString()));
         this.tipo = new SimpleObjectProperty<Tipo>(tipo);
         this.fumador = new SimpleBooleanProperty(fumador);
         this.alojamiento = new SimpleObjectProperty<Regimen>(alojamiento);
@@ -29,8 +30,8 @@ public class Reserva {
     public Reserva() {
         this.codigo = new SimpleIntegerProperty(0);
         this.cliente = new SimpleStringProperty("");
-        this.fechaLlegada = new SimpleObjectProperty<Date>(null);
-        this.fechaSalida = new SimpleObjectProperty<Date>(null);
+        this.fechaLlegada = new SimpleObjectProperty<LocalDate>(null);
+        this.fechaSalida = new SimpleObjectProperty<LocalDate>(null);
         this.tipo = new SimpleObjectProperty<Tipo>(null);
         this.fumador = new SimpleBooleanProperty(false);
         this.alojamiento = new SimpleObjectProperty<Regimen>(null);
@@ -60,27 +61,27 @@ public class Reserva {
         this.cliente.set(cliente);
     }
 
-    public Date getFechaLlegada() {
+    public LocalDate getFechaLlegada() {
         return fechaLlegada.get();
     }
 
-    public ObjectProperty<Date> fechaLlegadaProperty() {
+    public ObjectProperty<LocalDate> fechaLlegadaProperty() {
         return fechaLlegada;
     }
 
-    public void setFechaLlegada(Date fechaLlegada) {
+    public void setFechaLlegada(LocalDate fechaLlegada) {
         this.fechaLlegada.set(fechaLlegada);
     }
 
-    public Date getFechaSalida() {
+    public LocalDate getFechaSalida() {
         return fechaSalida.get();
     }
 
-    public ObjectProperty<Date> fechaSalidaProperty() {
+    public ObjectProperty<LocalDate> fechaSalidaProperty() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(Date fechaSalida) {
+    public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida.set(fechaSalida);
     }
 

@@ -3,11 +3,9 @@ package ch.makery.hotel;
 import ch.makery.hotel.controller.ClienteEditController;
 import ch.makery.hotel.controller.VPOverviewController;
 import ch.makery.hotel.controller.VROverviewController;
-import ch.makery.hotel.model.Cliente;
-import ch.makery.hotel.model.ClienteModelo;
-import ch.makery.hotel.model.ClienteVO;
-import ch.makery.hotel.model.ExceptionCliente;
+import ch.makery.hotel.model.*;
 import ch.makery.hotel.model.repository.impl.ClienteRepositoryImpl;
+import ch.makery.hotel.model.repository.impl.ReservasRepositoryImp;
 import ch.makery.hotel.util.Convert;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -25,30 +23,48 @@ public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
-    private ClienteModelo modelo;
-    private ClienteRepositoryImpl repository;
+    private ClienteModelo clienteModelo;
+    private ClienteRepositoryImpl clienteRepository;
     /**
      * The data as an observable list of Clientes.
      */
     private ObservableList<Cliente> clienteData = FXCollections.observableArrayList();
 
+    private ReservaModelo reservaModelo;
+    private ReservasRepositoryImp reservasRepository;
     /**
-     *
-     *
+     * The data as an observable list of Reservas.
+     */
+    private ObservableList<Reserva> reservaData = FXCollections.observableArrayList();
+
+    /**
      * @throws ExceptionCliente
      */
     public Main() throws ExceptionCliente {
         try {
-            this.modelo = new ClienteModelo();
-            this.repository = new ClienteRepositoryImpl();
-            modelo.setRep(this.repository);
-            for (ClienteVO c : modelo.obtenerClientes()) {
+            this.clienteModelo = new ClienteModelo();
+            this.clienteRepository = new ClienteRepositoryImpl();
+            clienteModelo.setRep(this.clienteRepository);
+            for (ClienteVO c : clienteModelo.obtenerClientes()) {
                 Cliente nuevo = Convert.convertTo(c);
                 clienteData.add(nuevo);
             }
         } catch (ExceptionCliente e) {
             throw new ExceptionCliente("No se conecta");
         }
+
+        try {
+            this.reservaModelo = new ReservaModelo();
+            this.reservasRepository = new ReservasRepositoryImp();
+            reservaModelo.setRep(this.reservasRepository);
+            for (ReservaVO r : reservaModelo.obtenerReservas()) {
+                Reserva nuevo = Convert.convertTo(r);
+                reservaData.add(nuevo);
+            }
+        } catch (ExceptionReserva e) {
+            throw new ExceptionCliente("No se conecta");
+        }
+
     }
 
     /**
@@ -58,6 +74,10 @@ public class Main extends Application {
      */
     public ObservableList<Cliente> getClienteData() {
         return clienteData;
+    }
+
+    public ObservableList<Reserva> getReservaData() {
+        return reservaData;
     }
 
     @Override
@@ -104,7 +124,7 @@ public class Main extends Application {
             //Give the controller access to the Main.
             VPOverviewController controller = loader.getController();
             controller.setMain(this);
-            controller.setClienteModelo(this.modelo);
+            controller.setClienteModelo(this.clienteModelo);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,6 +159,7 @@ public class Main extends Application {
             controller.setDialogStage(dialogStage);
             controller.setCliente(cliente);
 
+
             // Show the dialog and wait until the user closes it.
             dialogStage.showAndWait();
 
@@ -168,6 +189,9 @@ public class Main extends Application {
             VROverviewController controller = loader.getController();
             controller.setCliente(selectedCliente);
             controller.mostrarDatosCliente(selectedCliente);
+            //Give the controller access to the Main.
+            controller.setMain(this);
+            controller.setReservaModelo(this.reservaModelo);
 
 
             // Show the dialog and wait until the user closes it.

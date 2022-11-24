@@ -3,21 +3,22 @@ package ch.makery.hotel.controller;
 import ch.makery.hotel.Main;
 import ch.makery.hotel.model.Cliente;
 import ch.makery.hotel.model.Reserva;
+import ch.makery.hotel.model.ReservaModelo;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class VROverviewController {
 
     @FXML
     private TableView<Reserva> reservaTable;
     @FXML
-    private TableColumn<Reserva, Integer> codigoColumn;
+    private TableColumn<Reserva, Number> codigoColumn;
     @FXML
-    private TableColumn<Reserva, Date> fechaColumn;
+    private TableColumn<Reserva, LocalDate> fechaColumn;
     @FXML
     private TextField dniTxt;
     @FXML
@@ -33,6 +34,7 @@ public class VROverviewController {
 
     //Reference to the Main
     private Main main;
+    private ReservaModelo modelo;
     //Reference to the selected Cliente
     private Cliente cliente;
 
@@ -49,7 +51,11 @@ public class VROverviewController {
     @FXML
     private void initialize() {
         // Initialize the reservaTable with the two Columns
-        //codigoColumn.setCellFactory(c -> c.getValue());
+        codigoColumn.setCellValueFactory(c -> c.getValue().codigoProperty());
+        fechaColumn.setCellValueFactory(c -> c.getValue().fechaLlegadaProperty());
+
+        //Clear Reservas datail
+
     }
 
     public void mostrarDatosCliente(Cliente cliente) {
@@ -67,10 +73,25 @@ public class VROverviewController {
     public void setCliente(Cliente selectedCliente) {
         this.cliente = selectedCliente;
     }
+    public void setReservaModelo(ReservaModelo modelo) {
+        this.modelo = modelo;
+    }
 
 
 
     public boolean isOkClicked() {
         return true;
+    }
+
+    public void setMain(Main main) {
+        this.main = main;
+        // Add obsevable list data to the table
+        ObservableList <Reserva> reservasDeCliente = main.getReservaData();
+        for(Reserva r : reservasDeCliente) {
+            if(!r.getCliente().equals(this.cliente.getDni())) {
+                reservasDeCliente.remove(r);
+            }
+        }
+        reservaTable.setItems(reservasDeCliente);
     }
 }

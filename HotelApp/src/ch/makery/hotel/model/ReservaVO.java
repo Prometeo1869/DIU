@@ -4,18 +4,19 @@ import ch.makery.hotel.util.Regimen;
 import ch.makery.hotel.util.Tipo;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class ReservaVO {
 
     Integer codigo;
     private String cliente;
-    private Date fechaLlegada;
-    private Date fechaSalida;
+    private LocalDate fechaLlegada;
+    private LocalDate fechaSalida;
     private Tipo tipo;
     private boolean fumador;
     private Regimen alojamiento;
 
-    public ReservaVO(Integer codigo, String cliente, Date fechaLlegada, Date fechaSalida, Tipo tipo, boolean fumador, Regimen alojamiento) {
+    public ReservaVO(Integer codigo, String cliente, LocalDate fechaLlegada, LocalDate fechaSalida, Tipo tipo, boolean fumador, Regimen alojamiento) {
         this.codigo = codigo;
         this.cliente = cliente;
         this.fechaLlegada = fechaLlegada;
@@ -44,19 +45,19 @@ public class ReservaVO {
         this.cliente = cliente;
     }
 
-    public Date getFechaLlegada() {
+    public LocalDate getFechaLlegada() {
         return fechaLlegada;
     }
 
-    public void setFechaLlegada(Date fechaLlegada) {
+    public void setFechaLlegada(LocalDate fechaLlegada) {
         this.fechaLlegada = fechaLlegada;
     }
 
-    public Date getFechaSalida() {
+    public LocalDate getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(Date fechaSalida) {
+    public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 

@@ -5,6 +5,8 @@ import ch.makery.hotel.model.ClienteVO;
 import ch.makery.hotel.model.Reserva;
 import ch.makery.hotel.model.ReservaVO;
 
+import java.time.LocalDate;
+
 /**
  * Clase convertidor de Cliente a ClienteVO y viceversa
  *

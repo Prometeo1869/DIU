@@ -40,7 +40,6 @@ public class VPOverviewController {
     //Reference to the Main
     private Main main;
     private ClienteModelo modelo;
-    private VROverviewController controllerReservas;
     /**
      * Constructor
      */
@@ -123,7 +122,7 @@ public class VPOverviewController {
             // AÑADE A LA BASE DE DATOS
             modelo.getRep().addCliente(tempCliente);
 
-            this.ordenar();
+            this.ordenarClientes();
         }
     }
     /**
@@ -138,11 +137,11 @@ public class VPOverviewController {
             if (okClicked) {
                 mostrarClienteDetalle(selectedCliente);
                 modelo.getRep().editCliente(selectedCliente);
-                this.ordenar();
+                this.ordenarClientes();
             }
         } else {
             // Nothing selected.
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Ningún Cliente Seleccionado");
             alert.setContentText("Por favor, seleccine algún cliente para editarlo");
             alert.showAndWait();
@@ -156,7 +155,7 @@ public class VPOverviewController {
             boolean okClicked = main.mostrarReservas(selectedCliente);
         } else {
             // Nothing selected.
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Ningún Cliente Seleccionado");
             alert.setContentText("Seleccione un cliente para ver sus reservas");
             alert.showAndWait();
@@ -167,9 +166,9 @@ public class VPOverviewController {
         // Add obsevable list data to the table
         clienteTable.setItems(main.getClienteData());
 
-        ordenar();
+        ordenarClientes();
     }
-    public void ordenar() {
+    public void ordenarClientes() {
         // Order by apellido.
         apellidoColumn.setSortType(TableColumn.SortType.ASCENDING);
         clienteTable.getSortOrder().addAll(apellidoColumn);
