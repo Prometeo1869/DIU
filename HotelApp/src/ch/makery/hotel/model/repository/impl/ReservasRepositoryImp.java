@@ -15,6 +15,7 @@ public class ReservasRepositoryImp implements ReservasRepository {
     private String sentencia;
     private ArrayList<ReservaVO> reservas;
     private ReservaVO reserva;
+
     @Override
     public ArrayList<ReservaVO> ObtenerListaReservas() throws ExceptionReserva {
         try {
