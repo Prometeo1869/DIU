@@ -135,7 +135,7 @@ public class ClienteEditController {
             return true;
         } else {
             // Show the error message
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Datos no válidos");
             alert.setContentText(errorMessage);
             alert.showAndWait();

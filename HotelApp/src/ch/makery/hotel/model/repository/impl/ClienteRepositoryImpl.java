@@ -64,7 +64,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
             this.stmt.close();
             this.conexion.desconectarBD(conn);
         } catch (SQLException var3) {
-            throw new ExceptionCliente("No se ha podido añadir al cliente");
+            throw new ExceptionCliente("No se ha podido añadir el cliente");
         }
     }
 

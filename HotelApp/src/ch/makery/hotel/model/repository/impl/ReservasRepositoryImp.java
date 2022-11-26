@@ -9,20 +9,25 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * @Autor Juan Cebrian
+ */
 public class ReservasRepositoryImp implements ReservasRepository {
     private final ConexionJDBC conexion = new ConexionJDBC();
     private Statement stmt;
     private String sentencia;
     private ArrayList<ReservaVO> reservas;
     private ReservaVO reserva;
+    private Cliente cliente;
 
     @Override
     public ArrayList<ReservaVO> ObtenerListaReservas() throws ExceptionReserva {
+
         try {
             Connection conn = this.conexion.conectarBD();
             this.reservas = new ArrayList();
             this.stmt = conn.createStatement();
-            this.sentencia = "SELECT * FROM reservas ORDER BY fecha_llegada";
+            this.sentencia = "SELECT * FROM reservas WHERE cliente='" + cliente.getDni() + "' ORDER BY fecha_llegada";
             ResultSet rs = this.stmt.executeQuery(this.sentencia);
 
             while(rs.next()) {
@@ -45,9 +50,23 @@ public class ReservasRepositoryImp implements ReservasRepository {
         }
     }
 
+    public void setCliente(Cliente c) {
+        this.cliente = c;
+    }
     @Override
     public void addReserva(Reserva reserva) throws ExceptionReserva {
-//INSERT INTO `reservas` (`cliente`, `fecha_llegada`, `fecha_salida`, `tipo`, `fumador`, `regimen`, `codigo`) VALUES ('', '', '', '', '', '', NULL)
+        try {
+            Connection conn = this.conexion.conectarBD();
+            this.stmt = conn.createStatement();
+            this.sentencia = "INSERT INTO reservas (cliente, fecha_llegada, fecha_salida, tipo, fumador, regimen, codigo) VALUES('" +
+                reserva.getCliente() + "', '" + reserva.getFechaLlegada() + "', '" + reserva.getFechaSalida() + "', '" +
+                reserva.getTipo() + "', " + reserva.isFumador() + ", '" + reserva.getAlojamiento() + "', " + reserva.getCodigo() + ")";
+            this.stmt.executeUpdate(this.sentencia);
+            this.stmt.close();
+            this.conexion.desconectarBD(conn);
+        } catch (SQLException e) {
+            throw new ExceptionReserva("No se ha podido añadir la reserva");
+        }
     }
 
     @Override
@@ -58,5 +77,25 @@ public class ReservasRepositoryImp implements ReservasRepository {
     @Override
     public void editReserva(Reserva reserva) throws ExceptionReserva {
 
+    }
+
+    public int totalReservas() {
+        int dato = 0;
+        try {
+
+            Connection conn = this.conexion.conectarBD();
+            this.reservas = new ArrayList();
+            this.stmt = conn.createStatement();
+            this.sentencia = "SELECT * FROM reservas";
+            ResultSet rs = this.stmt.executeQuery(this.sentencia);
+            while (rs.next()) {
+                dato++;
+            }
+            this.stmt.close();
+            this.conexion.desconectarBD(conn);
+            return dato;
+        } catch (SQLException e) {
+            return dato;
+        }
     }
 }

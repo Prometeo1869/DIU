@@ -10,4 +10,5 @@ public interface ReservasRepository {
     void addReserva(Reserva reserva) throws ExceptionReserva;
     void deleteReserva(String dniCliente) throws ExceptionReserva;
     void editReserva(Reserva reserva) throws ExceptionReserva;
+    int totalReservas();
 }

@@ -12,12 +12,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class Main extends Application {
     private Stage primaryStage;
@@ -25,6 +29,7 @@ public class Main extends Application {
 
     private ClienteModelo clienteModelo;
     private ClienteRepositoryImpl clienteRepository;
+    private boolean ok = true;
     /**
      * The data as an observable list of Clientes.
      */
@@ -50,20 +55,16 @@ public class Main extends Application {
                 clienteData.add(nuevo);
             }
         } catch (ExceptionCliente e) {
-            throw new ExceptionCliente("No se conecta");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR DE CONEXIÓN");
+            alert.setContentText("Error al conectar con la base de datos");
+            alert.showAndWait();
+            ok = false;
         }
 
-        try {
-            this.reservaModelo = new ReservaModelo();
-            this.reservasRepository = new ReservasRepositoryImp();
-            reservaModelo.setRep(this.reservasRepository);
-            for (ReservaVO r : reservaModelo.obtenerReservas()) {
-                Reserva nuevo = Convert.convertTo(r);
-                reservaData.add(nuevo);
-            }
-        } catch (ExceptionReserva e) {
-            throw new ExceptionCliente("No se conecta");
-        }
+        this.reservaModelo = new ReservaModelo();
+        this.reservasRepository = new ReservasRepositoryImp();
+        reservaModelo.setRep(this.reservasRepository);
 
     }
 
@@ -84,9 +85,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Hotel");
-
-        initRootLayout();
-        mostrarVPOverview();
+        if(ok == true) {
+            initRootLayout();
+            mostrarVPOverview();
+        }
     }
 
     /**
@@ -185,6 +187,14 @@ public class Main extends Application {
             Scene scene = new Scene(reservasPage);
             dialogStage.setScene(scene);
 
+            //
+            reservasRepository.setCliente(selectedCliente);
+            reservaData.clear();
+            for (ReservaVO r : reservaModelo.obtenerReservas()) {
+                Reserva nuevo = Convert.convertTo(r);
+                reservaData.add(nuevo);
+            }
+
             // Set the cliente into the controller.
             VROverviewController controller = loader.getController();
             controller.setCliente(selectedCliente);
@@ -193,7 +203,6 @@ public class Main extends Application {
             controller.setMain(this);
             controller.setReservaModelo(this.reservaModelo);
 
-
             // Show the dialog and wait until the user closes it.
             dialogStage.showAndWait();
 
@@ -201,8 +210,11 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        } catch (ExceptionReserva e) {
+            throw new RuntimeException(e);
         }
     }
+
 
     public static void main(String[] args) {
         launch(args);

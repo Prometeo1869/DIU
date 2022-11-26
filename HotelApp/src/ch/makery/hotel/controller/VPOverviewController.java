@@ -181,7 +181,7 @@ public class VPOverviewController {
         boolean flag = false;
         for(ClienteVO cvo: modelo.obtenerClientes()) {
             Cliente c = Convert.convertTo(cvo);
-            if(c.getDni().equals(buscarDniTxtField.getText())) {
+            if(c.getDni().equals(buscarDniTxtField.getText().toUpperCase())) {
                 flag = true;
                 main.mostrarReservas(c);
                 this.mostrarClienteDetalle(c);

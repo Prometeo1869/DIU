@@ -21,4 +21,27 @@ public enum Tipo {
     public int getCantidad() {
         return cantidad;
     }
+
+    public static Tipo getTipoByTexto(String texto) {
+        //Doble de uso individual -> INDIVIDUAL
+        if (texto.equals("Doble de uso individual")) {
+            return Tipo.INDIVIDUAL;
+        }
+        //Doble -> DOBLE
+        if (texto.equals("Doble")) {
+            return Tipo.DOBLE;
+        }
+        //Junior suite -> JUNIOR
+        if (texto.equals("Junior suite")) {
+            return Tipo.JUNIOR;
+        }
+        //Suite -> SUITE
+        if (texto.equals("Suite")) {
+            return Tipo.SUITE;
+        }
+        //RESTO
+        else {
+            return null;
+        }
+    }
 }

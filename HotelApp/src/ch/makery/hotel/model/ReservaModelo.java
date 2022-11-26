@@ -18,4 +18,5 @@ public class ReservaModelo {
     public ArrayList<ReservaVO> obtenerReservas() throws ExceptionReserva {
         return this.rep.ObtenerListaReservas();
     }
+
 }
