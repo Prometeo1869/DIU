@@ -1,5 +1,8 @@
 package ch.makery.hotel.util;
 
+/**
+ * @author Juan Cebrian
+ */
 public enum Tipo {
     INDIVIDUAL("Doble de uso individual", 20),
     DOBLE("Doble", 80),

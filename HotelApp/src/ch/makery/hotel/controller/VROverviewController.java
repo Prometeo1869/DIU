@@ -9,11 +9,15 @@ import ch.makery.hotel.util.Regimen;
 import ch.makery.hotel.util.Tipo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
 import java.time.LocalDate;
 
 /**
- * @Autor Juan Cebrian
+ * @author Juan Cebrián
  */
 public class VROverviewController {
 
@@ -28,20 +32,10 @@ public class VROverviewController {
     @FXML
     private TextField nombreTxt, apellidosTxt, direccionTxt, localidadTxt, provinciaTxt;
     @FXML
-    private DatePicker fechaLlegada, fechaSalida;
+    private Button btCrear, btModificar, btEliminar;
     @FXML
-    private Spinner<Integer> spNumHab;
-    @FXML
-    private ChoiceBox<String> menuTipo;
-    @FXML
-    private Label txtFumador;
-    @FXML
-    private CheckBox checkFumador;
-    @FXML
-    private RadioButton rbDesayuno, rbMedia, rbCompleta;
-    @FXML
-    private Button btLimpiar, btAceptar, btCancelar, btCrear, btModificar, btEliminar;
-    private ToggleGroup grupoRegimen;
+    private Label labelFechaLlegada, labelFechaSalida, labelNumHab, labelTipo, labelFumador, labelRegimen;
+
     //Reference to the Main
     private Main main;
     private ReservaModelo modelo;
@@ -72,24 +66,9 @@ public class VROverviewController {
         reservaTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> mostrarReservaDetalle(newValue)
         );
-
-        // Define possible values of ChoiceBox menuTipo
-        String[] tipo = new String[4];
-        for(int i = 0; i < tipo.length; i++) {
-            tipo[i] = Tipo.values()[i].getTexto();
-        }
-        menuTipo.getItems().addAll(tipo);
-
-        // Define ButtonGroup grupoRegimen to RadioButton Regimen
-        grupoRegimen = new ToggleGroup();
-        rbDesayuno.setToggleGroup(grupoRegimen);
-        rbMedia.setToggleGroup(grupoRegimen);
-        rbCompleta.setToggleGroup(grupoRegimen);
-
     }
     public void mostrarDatosCliente(Cliente cliente) {
         // Fill the labels with info from the cliente object.
-
             dniTxt.setText(cliente.getDni());
             dniTxt.setEditable(false);
             nombreTxt.setText(cliente.getNombre());
@@ -105,140 +84,62 @@ public class VROverviewController {
     }
     private void mostrarReservaDetalle(Reserva reserva) {
         if(reserva != null) {
-            fechaLlegada.setValue(reserva.getFechaLlegada());
-            fechaLlegada.setEditable(false);
-            fechaSalida.setValue(reserva.getFechaSalida());
-            fechaSalida.setEditable(false);
-            spNumHab.setValueFactory(
-                    new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1, 1)
-            );
-            spNumHab.setEditable(false);
-            menuTipo.setValue(Tipo.valueOf(String.valueOf(reserva.getTipo())).getTexto());
-            menuTipo.setOnAction(e -> {
-                menuTipo.setValue(Tipo.valueOf(String.valueOf(reserva.getTipo())).getTexto());
-            });
-            checkFumador.setSelected(reserva.isFumador());
-            checkFumador.setOnAction(e -> {
-                checkFumador.setSelected(reserva.isFumador());
-                    }
-            );
-            if (checkFumador.isSelected()) {
-                txtFumador.setVisible(true);
-            } else {
-                txtFumador.setVisible(false);
-            }
-            opcionRegimen(reserva);
-            rbDesayuno.setOnAction(e -> {
-                opcionRegimen(reserva);
-            });rbMedia.setOnAction(e -> {
-                opcionRegimen(reserva);
-            });rbCompleta.setOnAction(e -> {
-                opcionRegimen(reserva);
-            });
-        }
-    }
-
-    private void opcionRegimen(Reserva reserva) {
-        String alojamiento = reserva.getAlojamiento().getTexto();
-        switch (alojamiento) {
-            case "Alojamiento y desayuno":
-                rbDesayuno.setSelected(true);
-                break;
-            case "Media pensión":
-                rbMedia.setSelected(true);
-                break;
-            case "Pensión completa":
-                rbCompleta.setSelected(true);
-                break;
+            labelFechaLlegada.setText(reserva.getFechaLlegada().toString());
+            labelFechaSalida.setText(reserva.getFechaSalida().toString());
+            labelNumHab.setText("1");
+            labelTipo.setText(reserva.getTipo().getTexto());
+            labelFumador.setText(reserva.isFumador() ? "Si" : "No");
+            labelRegimen.setText(reserva.getAlojamiento().getTexto());
+            btModificar.setVisible(true);
+            btEliminar.setVisible(true);
+        } else {
+            labelFechaLlegada.setText("");
+            labelFechaSalida.setText("");
+            labelNumHab.setText("");
+            labelTipo.setText("");
+            labelFumador.setText("");
+            labelRegimen.setText("");
         }
     }
     @FXML
-    private void pulsarLimpiarReserva() {
-        fechaLlegada.setValue(null);
-        fechaLlegada.setEditable(true);
-        fechaSalida.setValue(null);
-        fechaSalida.setEditable(true);
-        spNumHab.setValueFactory(
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1, 0)
-        );
-        menuTipo.setValue(null);
-        checkFumador.setSelected(false);
-        txtFumador.setVisible(false);
-        rbDesayuno.setSelected(false);
-        rbMedia.setSelected(false);
-        rbCompleta.setSelected(false);
-        btLimpiar.setVisible(true);
-        btAceptar.setVisible(true);
-        btCancelar.setVisible(true);
-        System.out.println(modelo.getRep().totalReservas());
-    }
-    @FXML
-    private void pulsarCrearReserva() {
-        pulsarLimpiarReserva();
-    }
-    public void guardarReservaNueva() throws ExceptionReserva {
+    private void pulsarCrearReserva() throws ExceptionReserva {
         Reserva tempReserva = new Reserva();
-        if(isInputValid()) {
-            tempReserva.setCodigo(modelo.getRep().totalReservas() + 1);
-            tempReserva.setCliente(dniTxt.getText());
-            tempReserva.setFechaLlegada(fechaLlegada.getValue());
-            tempReserva.setFechaSalida(fechaSalida.getValue());
-            tempReserva.setTipo(Tipo.getTipoByTexto(menuTipo.getValue()));
-            tempReserva.setFumador(checkFumador.isSelected());
-            if(grupoRegimen.getSelectedToggle() == rbDesayuno) {
-                tempReserva.setAlojamiento(Regimen.DESAYUNO);
-            } else if(grupoRegimen.getSelectedToggle() == rbMedia) {
-                tempReserva.setAlojamiento(Regimen.MEDIA);
-            } else {
-                tempReserva.setAlojamiento(Regimen.COMPLETA);
-            }
-
-            okClicked = true;
-        }
-        if(okClicked) {
+        tempReserva.setCliente(cliente.getDni()); // Asignar Cliente a la nueva reserva
+        tempReserva.setCodigo(modelo.getRep().elegirCodigoLibre()); //Asignar codigo a la nueva reserva
+        boolean okClicked = main.mostrarReservaEditDialog(tempReserva);
+        if (okClicked) {
             main.getReservaData().add(tempReserva);
             // AÑADE A LA BASE DE DATOS
             modelo.getRep().addReserva(tempReserva);
+            this.ordenarReservas();
         }
     }
-
-
-    private boolean isInputValid() {
-        String errorMessage = "";
-        //Si las fechas están vacias o la fecha de salida es anterior a la de llegada
-        if(fechaLlegada.getValue() != null && fechaSalida.getValue() != null) {
-            if(fechaLlegada.getValue().compareTo(fechaSalida.getValue()) > 0) {
-                errorMessage += "Fecha de salida anterior a fecha de llegada\n";
+    @FXML
+    private void pulsarModificarReserva() throws ExceptionReserva {
+        Reserva selectedReserva = reservaTable.getSelectionModel().getSelectedItem();
+        if (selectedReserva != null) {
+            boolean okClicked = main.mostrarReservaEditDialog(selectedReserva);
+            if (okClicked) {
+                mostrarReservaDetalle(selectedReserva);
+                modelo.getRep().editReserva(selectedReserva);
+                this.ordenarReservas();
             }
-        }
-        if(fechaLlegada.getValue() == null) {
-            errorMessage += "Introduzca la fecha de llegada\n";
-        }
-        if(fechaSalida.getValue() == null) {
-            errorMessage += "Introduzca la fecha de salida\n";
-        }
-        // Si el número de habitaciones es 0
-        if(spNumHab.getValue() == 0) {
-            errorMessage += "Número de habitaciones: 0\n";
-        }
-        // Si no se ha seleccionado el tipo de habitación
-        if(menuTipo.getValue() == null) {
-            errorMessage += "Seleccione el tipo de habitación\n";
-        }
-        // Si no se selecciona el regimen de alojameinto
-        if(rbDesayuno.isSelected() == false && rbMedia.isSelected() == false && rbCompleta.isSelected() == false) {
-            errorMessage += "Seleccione el régimen de alojamiento\n";
-        }
-        // Validar o mensaje de advertencia
-        if (errorMessage.length() == 0) {
-            return true;
         } else {
-            // Show the error message
+            // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Datos no válidos");
-            alert.setContentText(errorMessage);
+            alert.setTitle("Ninguna Reserva Seleccionada");
+            alert.setContentText("Por favor, seleccine alguna reserva para editarla");
             alert.showAndWait();
-            return false;
+        }
+    }
+    public void pulsarEliminar() throws ExceptionReserva{
+        int posicion = reservaTable.getSelectionModel().getSelectedIndex();
+        int code = reservaTable.getItems().get(posicion).getCodigo();
+        if(posicion >= 0) {
+            //BORRA DE LA APP
+            reservaTable.getItems().remove(posicion);
+            //BORRA DE LA BASE DE DATOS
+            modelo.getRep().deleteReserva(code);
         }
     }
     public void setCliente(Cliente selectedCliente) {
@@ -256,6 +157,19 @@ public class VROverviewController {
         this.main = main;
         // Add obsevable list data to the table
         reservaTable.setItems(main.getReservaData());
+
+        ordenarReservas();
     }
 
+    private void ordenarReservas() {
+        // Order by fechaLlegada.
+        fechaColumn.setSortType(TableColumn.SortType.ASCENDING);
+        reservaTable.getSortOrder().addAll(fechaColumn);
+    }
+
+    public void volverACliente(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+    }
 }

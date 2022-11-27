@@ -7,6 +7,9 @@ import javafx.beans.property.*;
 import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * @autor Juan Cebrian
+ */
 public class Reserva {
 
     private IntegerProperty codigo;

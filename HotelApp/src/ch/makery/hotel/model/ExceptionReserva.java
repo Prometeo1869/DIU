@@ -1,5 +1,8 @@
 package ch.makery.hotel.model;
 
+/**
+ * @author Juan Cebrian
+ */
 public class ExceptionReserva extends Exception {
     private String mensaje;
 

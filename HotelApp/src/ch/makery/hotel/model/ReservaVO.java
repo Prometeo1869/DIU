@@ -6,6 +6,9 @@ import ch.makery.hotel.util.Tipo;
 import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * @author Juan Cebrian
+ */
 public class ReservaVO {
 
     Integer codigo;

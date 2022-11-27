@@ -10,7 +10,7 @@ import java.time.LocalDate;
 /**
  * Clase convertidor de Cliente a ClienteVO y viceversa
  *
- * @Autor: Juan Cebrián
+ * @author Juan Cebrián
  */
 public class Convert {
 

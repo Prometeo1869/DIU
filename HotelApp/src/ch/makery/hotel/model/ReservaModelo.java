@@ -1,10 +1,11 @@
 package ch.makery.hotel.model;
 
-import ch.makery.hotel.model.repository.ClienteRepository;
 import ch.makery.hotel.model.repository.ReservasRepository;
-
 import java.util.ArrayList;
 
+/**
+ * @author Juan Cebrian
+ */
 public class ReservaModelo {
 
     ReservasRepository rep;

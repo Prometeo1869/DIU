@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * @Autor Juan Cebrian
+ * @author Juan Cebrian
  */
 public class ReservasRepositoryImp implements ReservasRepository {
     private final ConexionJDBC conexion = new ConexionJDBC();
@@ -70,32 +70,58 @@ public class ReservasRepositoryImp implements ReservasRepository {
     }
 
     @Override
-    public void deleteReserva(String dniCliente) throws ExceptionReserva {
-
+    public void deleteReserva(int codigo) throws ExceptionReserva {
+        try {
+            Connection conn = this.conexion.conectarBD();
+            this.stmt = conn.createStatement();
+            String sql = String.format("DELETE FROM reservas WHERE codigo=" + codigo + "");
+            stmt.executeUpdate(sql);
+            this.conexion.desconectarBD(conn);
+        } catch (SQLException var) {
+            throw new ExceptionReserva("No se ha podido relaizar la eliminación");
+        }
     }
 
     @Override
     public void editReserva(Reserva reserva) throws ExceptionReserva {
-
-    }
-
-    public int totalReservas() {
-        int dato = 0;
         try {
-
+            Connection conn = this.conexion.conectarBD();
+            this.stmt = conn.createStatement();
+            String sql = String.format("UPDATE reservas SET " +
+                    "cliente='" + reserva.getCliente() +
+                    "', fecha_llegada='" + reserva.getFechaLlegada() +
+                    "', fecha_salida='" + reserva.getFechaSalida() +
+                    "', tipo='" + reserva.getTipo() +
+                    "', fumador=" + reserva.isFumador() +
+                    ", regimen='" + reserva.getAlojamiento() +
+                    "',codigo=" + reserva.getCodigo() +
+                    " WHERE codigo=" +reserva.getCodigo() + "");
+            this.stmt.executeUpdate(sql);
+            this.conexion.desconectarBD(conn);
+        } catch (Exception var4) {
+            throw new ExceptionReserva("No se ha podido editar");
+        }
+    }
+    public int elegirCodigoLibre() {
+        int codigo = 1;
+        try {
             Connection conn = this.conexion.conectarBD();
             this.reservas = new ArrayList();
             this.stmt = conn.createStatement();
             this.sentencia = "SELECT * FROM reservas";
             ResultSet rs = this.stmt.executeQuery(this.sentencia);
             while (rs.next()) {
-                dato++;
-            }
+                if (codigo == rs.getInt("codigo")) {
+                    codigo++;
+                } else {
             this.stmt.close();
             this.conexion.desconectarBD(conn);
-            return dato;
+            return codigo;
+                }
+            }
+            return codigo;
         } catch (SQLException e) {
-            return dato;
+            return codigo;
         }
     }
 }

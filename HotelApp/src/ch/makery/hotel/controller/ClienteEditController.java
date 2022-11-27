@@ -70,7 +70,7 @@ public class ClienteEditController {
      * Called when the user clicks Aceptar.
      */
     @FXML
-    private void guardarCambios() {
+    private void guardarCambiosCliente() {
         if (isInputValid()) {
             cliente.setDni(dniTxtField.getText().toUpperCase());
             cliente.setApellidos(apellidoTxtField.getText());

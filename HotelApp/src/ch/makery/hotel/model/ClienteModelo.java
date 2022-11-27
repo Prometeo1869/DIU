@@ -4,6 +4,9 @@ import ch.makery.hotel.model.repository.ClienteRepository;
 
 import java.util.ArrayList;
 
+/**
+ * @author Juan Cebrian
+ */
 public class ClienteModelo {
 
     ClienteRepository rep;

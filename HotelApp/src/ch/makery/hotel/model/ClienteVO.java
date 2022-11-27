@@ -2,6 +2,9 @@ package ch.makery.hotel.model;
 
 import javafx.beans.property.StringProperty;
 
+/**
+ * @author Juan Cebrian
+ */
 public class ClienteVO {
 
     private String dni;

@@ -1,0 +1,6 @@
+ch.makery.hotel
+ch.makery.hotel.controller
+ch.makery.hotel.model
+ch.makery.hotel.model.repository
+ch.makery.hotel.model.repository.impl
+ch.makery.hotel.util

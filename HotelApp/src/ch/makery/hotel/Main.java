@@ -1,8 +1,6 @@
 package ch.makery.hotel;
 
-import ch.makery.hotel.controller.ClienteEditController;
-import ch.makery.hotel.controller.VPOverviewController;
-import ch.makery.hotel.controller.VROverviewController;
+import ch.makery.hotel.controller.*;
 import ch.makery.hotel.model.*;
 import ch.makery.hotel.model.repository.impl.ClienteRepositoryImpl;
 import ch.makery.hotel.model.repository.impl.ReservasRepositoryImp;
@@ -23,6 +21,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+/**
+ * @author Juan Cebrian
+ */
 public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -41,6 +42,7 @@ public class Main extends Application {
      * The data as an observable list of Reservas.
      */
     private ObservableList<Reserva> reservaData = FXCollections.observableArrayList();
+    private RootLayoutController rootLayoutController;
 
     /**
      * @throws ExceptionCliente
@@ -100,7 +102,9 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/RootLayout.fxml"));
             rootLayout = loader.load();
-
+            // Set the cliente into the controller.
+            RootLayoutController controller = loader.getController();
+            controller.setMain(this);
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -108,6 +112,7 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     /**
@@ -215,8 +220,66 @@ public class Main extends Application {
         }
     }
 
+    public boolean mostrarReservaEditDialog(Reserva reserva) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/ReservaEditDialog.fxml"));
+            AnchorPane editPage = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Editar Reserva");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(editPage);
+            dialogStage.setScene(scene);
+
+            // Set the reserva into the controller.
+            ReservaEditController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setReserva(reserva);
+            //Give the controller access to ReservaModelo
+            controller.setReservaModelo(this.reservaModelo);
+
+            // Show the dialog and wait until the user closes it.
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public void mostrarJavaDocDialog() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/JavaDocView.fxml"));
+            AnchorPane editPage = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("JAVA DOC");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(editPage);
+            dialogStage.setScene(scene);
+
+            // Set the reserva into the controller.
+            JavaDocController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+
+            // Show the dialog and wait until the user closes it.
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
     }
+
 }

@@ -10,6 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
+/**
+ * @author Juan Cebrián
+ */
 public class VPOverviewController {
 
     @FXML
@@ -168,7 +171,7 @@ public class VPOverviewController {
 
         ordenarClientes();
     }
-    public void ordenarClientes() {
+    private void ordenarClientes() {
         // Order by apellido.
         apellidoColumn.setSortType(TableColumn.SortType.ASCENDING);
         clienteTable.getSortOrder().addAll(apellidoColumn);

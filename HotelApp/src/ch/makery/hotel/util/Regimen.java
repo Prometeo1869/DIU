@@ -1,5 +1,8 @@
 package ch.makery.hotel.util;
 
+/**
+ * @author Juan Cebrian
+ */
 public enum Regimen {
     DESAYUNO("Alojamiento y desayuno"),
     MEDIA("Media pensión"),

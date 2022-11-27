@@ -6,6 +6,9 @@ import ch.makery.hotel.model.ExceptionCliente;
 
 import java.util.ArrayList;
 
+/**
+ * @author Juan Cebrian
+ */
 public interface ClienteRepository {
 
     ArrayList<ClienteVO> ObtenerListaClientes() throws ExceptionCliente;

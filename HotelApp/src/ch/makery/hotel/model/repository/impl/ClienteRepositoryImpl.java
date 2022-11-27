@@ -9,6 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * @author Juan Cebrián
+ */
 public class ClienteRepositoryImpl implements ClienteRepository {
     private final ConexionJDBC conexion = new ConexionJDBC();
     private Statement stmt;
@@ -94,9 +97,14 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         try {
             Connection conn = this.conexion.conectarBD();
             this.stmt = conn.createStatement();
-            String sql = String.format("UPDATE cliente SET dni='" + cliente.getDni() + "', nombre='" + cliente.getNombre() +
-                    "', apellidos='" + cliente.getApellidos() + "', direccion='" + cliente.getDireccion() + "', localidad='" +
-                    cliente.getLocalidad() + "', provincia='" + cliente.getProvincia() +"' WHERE dni='" +cliente.getDni() + "'");
+            String sql = String.format("UPDATE cliente SET " +
+                            "dni='" + cliente.getDni() +
+                    "', nombre='" + cliente.getNombre() +
+                    "', apellidos='" + cliente.getApellidos() +
+                    "', direccion='" + cliente.getDireccion() +
+                    "', localidad='" + cliente.getLocalidad() +
+                    "', provincia='" + cliente.getProvincia() +
+                    "' WHERE dni='" +cliente.getDni() + "'");
             this.stmt.executeUpdate(sql);
             this.conexion.desconectarBD(conn);
         } catch (Exception var4) {
