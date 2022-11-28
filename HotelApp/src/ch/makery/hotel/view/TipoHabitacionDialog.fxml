@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.hotel.controller.TipoHabitacionController">
+   <children>
+      <Label layoutX="70.0" layoutY="60.0" text="DOBLE DE USO INDIVIDUAL" />
+      <Label layoutX="446.0" layoutY="69.0" text="DOBLE" />
+      <Label layoutX="70.0" layoutY="328.0" text="JUNIOR SUITE" />
+      <Label layoutX="446.0" layoutY="328.0" text="SUITE" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="70.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/individual.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/doble.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="70.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/junior.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="446.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/suite.png" />
+         </image>
+      </ImageView>
+      <ProgressBar fx:id="pbIndividual" layoutX="70.0" layoutY="243.0" prefWidth="200.0" progress="0.0" />
+      <ProgressBar fx:id="pbDoble" layoutX="446.0" layoutY="243.0" prefWidth="200.0" progress="0.0" />
+      <ProgressBar fx:id="pbJunior" layoutX="70.0" layoutY="512.0" prefWidth="200.0" progress="0.0" />
+      <ProgressBar fx:id="pbSuite" layoutX="446.0" layoutY="512.0" prefWidth="200.0" progress="0.0" />
+   </children>
+</AnchorPane>

@@ -34,8 +34,10 @@ public class RootLayoutController {
     }
 
     public void verOcupacion(ActionEvent event) {
+        main.mostrarOcupacion();
     }
 
     public void verTipoHabitacion(ActionEvent event) {
+        main.mostrarTipoHabitacion();
     }
 }

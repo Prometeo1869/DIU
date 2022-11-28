@@ -13,13 +13,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+
 
 /**
  * @author Juan Cebrian
@@ -252,34 +254,91 @@ public class Main extends Application {
         }
     }
     public void mostrarJavaDocDialog() {
-        try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("view/JavaDocView.fxml"));
-            AnchorPane editPage = loader.load();
 
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("JAVA DOC");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(editPage);
-            dialogStage.setScene(scene);
+            try {
+                WebView webView = new WebView();
 
-            // Set the reserva into the controller.
-            JavaDocController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
+                WebEngine webEngine = webView.getEngine();
+                webEngine.load("https://www.google.com/");
 
-            // Show the dialog and wait until the user closes it.
-            dialogStage.showAndWait();
+                StackPane root = new StackPane();
+                root.getChildren().add(webView);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                Stage dialogStage = new Stage();
+                dialogStage.setTitle("Ver JavaDoc");
+                dialogStage.initOwner(primaryStage);
+                Scene scene = new Scene(root);
+                dialogStage.setScene(scene);
+
+                dialogStage.showAndWait();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: No puede abrir el WebView");
+            }
+
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    public void mostrarOcupacion() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/OcupacionDialog.fxml"));
+            AnchorPane editPage = loader.load();
+
+            StackPane root = new StackPane();
+            root.getChildren().add(editPage);
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Estadisticas de Ocupación por mes");
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(root);
+            dialogStage.setScene(scene);
+
+            //Set the reservas into the controller
+
+            OcupacionController controller = loader.getController();
+            controller.setReservaData(reservasRepository.listaReservasTotales());
+
+            dialogStage.showAndWait();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: No pueden abrir la ventana de estadísticas");
+        }
+    }
+
+    public void mostrarTipoHabitacion() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/TipoHabitacionDialog.fxml"));
+            AnchorPane editPage = loader.load();
+
+            StackPane root = new StackPane();
+            root.getChildren().add(editPage);
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Ocupación y tipo de habitaciones");
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(root);
+            dialogStage.setScene(scene);
+
+            //Set the reservas into the controller
+
+            TipoHabitacionController controller = loader.getController();
+            controller.calculoProgressBar(reservasRepository.listaReservasTotales());
+
+            dialogStage.showAndWait();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: No pueden abrir la ventana de estadísticas");
+        }
+    }
 }

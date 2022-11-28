@@ -8,6 +8,7 @@ import ch.makery.hotel.util.Tipo;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Juan Cebrian
@@ -106,7 +107,6 @@ public class ReservasRepositoryImp implements ReservasRepository {
         int codigo = 1;
         try {
             Connection conn = this.conexion.conectarBD();
-            this.reservas = new ArrayList();
             this.stmt = conn.createStatement();
             this.sentencia = "SELECT * FROM reservas";
             ResultSet rs = this.stmt.executeQuery(this.sentencia);
@@ -124,4 +124,32 @@ public class ReservasRepositoryImp implements ReservasRepository {
             return codigo;
         }
     }
+
+    public ArrayList<Reserva> listaReservasTotales() {
+        ArrayList<Reserva> lista = new ArrayList<>();
+        try {
+            Connection conn = this.conexion.conectarBD();
+            this.stmt = conn.createStatement();
+            this.sentencia = "SELECT * FROM reservas";
+            ResultSet rs = this.stmt.executeQuery(this.sentencia);
+            while (rs.next()) {
+                Reserva r = new Reserva(//Integer codigo, String cliente, LocalDate fechaLlegada, LocalDate fechaSalida, Tipo tipo, boolean fumador, Regimen alojamiento) {
+                        rs.getInt("codigo"),
+                        rs.getString("cliente"),
+                        rs.getDate("fecha_llegada").toLocalDate(),
+                        rs.getDate("fecha_salida").toLocalDate(),
+                        Tipo.valueOf(rs.getObject("tipo").toString()),
+                        rs.getBoolean("fumador"),
+                        Regimen.valueOf(rs.getObject("regimen").toString())
+                );
+                lista.add(r);
+            }
+            this.stmt.close();
+            this.conexion.desconectarBD(conn);
+            return lista;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
 }
