@@ -6,8 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.hotel.controller.TipoHabitacionController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.hotel.controller.TipoHabitacionController">
    <children>
       <Label layoutX="70.0" layoutY="60.0" text="DOBLE DE USO INDIVIDUAL" />
       <Label layoutX="446.0" layoutY="69.0" text="DOBLE" />

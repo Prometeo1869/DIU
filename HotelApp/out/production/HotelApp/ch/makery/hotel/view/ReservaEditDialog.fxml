@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="625.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.hotel.controller.ReservaEditController">
+<AnchorPane prefHeight="400.0" prefWidth="625.0" styleClass="background" stylesheets="@menubar.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.hotel.controller.ReservaEditController">
    <children>
-      <Pane layoutX="30.0" layoutY="245.0" prefHeight="97.0" prefWidth="164.0" style="-fx-border-color: #B5B5B5; -fx-border-radius: 5px;">
+      <Pane layoutX="30.0" layoutY="245.0" prefHeight="97.0" prefWidth="164.0" style="-fx-border-color: #B5B5B5; -fx-border-radius: 5px;" styleClass="label" stylesheets="@menubar.css">
          <children>
-            <RadioButton fx:id="rbDesayuno" layoutX="7.0" layoutY="14.0" mnemonicParsing="false" text="Alojamiento y desayuno" />
-            <RadioButton fx:id="rbMedia" layoutX="7.0" layoutY="40.0" mnemonicParsing="false" text="Media pensión" />
-            <RadioButton fx:id="rbCompleta" layoutX="7.0" layoutY="66.0" mnemonicParsing="false" text="Pensión completa" />
+            <RadioButton fx:id="rbDesayuno" layoutX="7.0" layoutY="14.0" mnemonicParsing="false" styleClass="label" stylesheets="@menubar.css" text="Alojamiento y desayuno" />
+            <RadioButton fx:id="rbMedia" layoutX="7.0" layoutY="40.0" mnemonicParsing="false" styleClass="label" stylesheets="@menubar.css" text="Media pensión" />
+            <RadioButton fx:id="rbCompleta" layoutX="7.0" layoutY="66.0" mnemonicParsing="false" styleClass="label" stylesheets="@menubar.css" text="Pensión completa" />
          </children>
       </Pane>
       <Label layoutX="40.0" layoutY="45.0" text="Fecha de llegada" />
@@ -26,9 +26,9 @@
       <Label layoutX="40.0" layoutY="150.0" text="Número de habitaciones" />
       <Spinner fx:id="spNumHab" layoutX="175.0" layoutY="150.0" prefHeight="25.0" prefWidth="57.0" />
       <Label layoutX="265.0" layoutY="150.0" text="Tipo de habitación" />
-      <ChoiceBox fx:id="menuTipo" layoutX="370.0" layoutY="150.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="menuTipo" layoutX="370.0" layoutY="150.0" prefWidth="150.0" stylesheets="@cuadroTH.css" />
       <Label layoutX="40.0" layoutY="225.0" text="Regimen" />
-      <CheckBox fx:id="checkFumador" layoutX="265.0" layoutY="225.0" mnemonicParsing="false" onAction="#clickFumador" text="Fumador" />
+      <CheckBox fx:id="checkFumador" layoutX="265.0" layoutY="225.0" mnemonicParsing="false" onAction="#clickFumador" styleClass="label" stylesheets="@menubar.css" text="Fumador" />
       <Label fx:id="txtFumador" alignment="CENTER" layoutX="355.0" layoutY="225.0" prefHeight="67.0" prefWidth="246.0" text="Se informa a los clientes que sólo está permitido fumar en las habitaciones reservadads para tal fin" textAlignment="JUSTIFY" textOverrun="CLIP" visible="false" wrapText="true" />
       <Button fx:id="btLimpiar" layoutX="265.0" layoutY="340.0" mnemonicParsing="false" onAction="#pulsarLimpiarReserva" text="Limpiar" />
       <Button fx:id="btAceptar" layoutX="365.0" layoutY="340.0" mnemonicParsing="false" onAction="#guardarCambiosReserva" text="Aceptar" />

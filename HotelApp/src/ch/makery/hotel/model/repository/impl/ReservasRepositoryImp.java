@@ -108,7 +108,7 @@ public class ReservasRepositoryImp implements ReservasRepository {
         try {
             Connection conn = this.conexion.conectarBD();
             this.stmt = conn.createStatement();
-            this.sentencia = "SELECT * FROM reservas";
+            this.sentencia = "SELECT * FROM reservas ORDER BY codigo";
             ResultSet rs = this.stmt.executeQuery(this.sentencia);
             while (rs.next()) {
                 if (codigo == rs.getInt("codigo")) {
@@ -130,7 +130,7 @@ public class ReservasRepositoryImp implements ReservasRepository {
         try {
             Connection conn = this.conexion.conectarBD();
             this.stmt = conn.createStatement();
-            this.sentencia = "SELECT * FROM reservas";
+            this.sentencia = "SELECT * FROM reservas ORDER BY codigo";
             ResultSet rs = this.stmt.executeQuery(this.sentencia);
             while (rs.next()) {
                 Reserva r = new Reserva(//Integer codigo, String cliente, LocalDate fechaLlegada, LocalDate fechaSalida, Tipo tipo, boolean fumador, Regimen alojamiento) {
