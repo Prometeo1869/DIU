@@ -1,4 +1,4 @@
-package ch.makery.address.model;
+package ch.makery.examen.model;
 
 import Modelo.ExcepcionMoneda;
 import Modelo.MonedaVO;
