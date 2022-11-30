@@ -22,27 +22,16 @@ import java.util.ArrayList;
 public class VentanaPrincipalController {
 
     @FXML
-    private Label moneda1, moneda2;
+    private Label moneda2;
     @FXML
     private TextField valor1, valor2;
     @FXML
     private ChoiceBox<String> chMonedas;
     private Main main;
     float multiplicador = 1;
-    ObservableList<Moneda> listaMonedas = FXCollections.observableArrayList();
+    private MonedaModelo monedaModelo;
 
     public VentanaPrincipalController() {
-        try {
-            if (!valor1.getText().equals("")) {
-                valor1.setOnKeyPressed(event -> {
-                    if (event.getCode() == KeyCode.ENTER) {
-                        pulsarConvertir();
-                    }
-                });
-            }
-        } catch (NullPointerException e) {
-
-        }
     }
     @FXML
     private void initialize() throws ExcepcionMoneda {
@@ -55,7 +44,7 @@ public class VentanaPrincipalController {
     private void cambiarMoneda(String nombreMoneda) {
         if(nombreMoneda != null) {
             moneda2.setText(nombreMoneda);
-            for(Moneda m: listaMonedas) {
+            for(Moneda m: this.main.getMonedaData()) {
                 if(nombreMoneda.equals(m.getNombre())) {
                     this.multiplicador = m.getMultiplicador();
                 }
@@ -66,31 +55,63 @@ public class VentanaPrincipalController {
 
     public void setMain(Main main) {
         this.main = main;
-        //tvMoneda.setItems(main.getMonedaData());
-    }
-
-    public void setMonedaData(ArrayList<MonedaVO> obtenerListaMonedas) {
-        for(MonedaVO m: obtenerListaMonedas) {
-            chMonedas.getItems().add(m.getNombre());
-            listaMonedas.add(Convert.convertTo(m));
-        }
     }
 
     public void pulsarConvertir() {
         if(valor2.getText().equals("")) {
-            float resultado = multiplicador * Float.valueOf(valor1.getText());
+            float resultado = multiplicador * Float.parseFloat(valor1.getText());
             valor2.setText("" + resultado);
         }
         if(valor1.getText().equals("")) {
-            float resultado = Float.valueOf(valor2.getText()) * (2 - multiplicador);
+            float resultado = Float.parseFloat(valor2.getText()) * (2 - multiplicador);
             valor1.setText("" + resultado);
         }
     }
 
-    public void pulsarEliminar(ActionEvent actionEvent) {
+    public void pulsarEliminar(ActionEvent actionEvent) throws ExcepcionMoneda {
         valor1.setText("");
         valor2.setText("");
         moneda2.setText("");
-        //chMonedas.setItems(null);
+
+        String nombreMoneda = chMonedas.getValue();
+        chMonedas.getItems().removeAll(nombreMoneda);
+        for(Moneda m: main.getMonedaData()) {
+            if(m.getNombre().equals(nombreMoneda)) {
+                int codigo = m.getCodigo();
+                monedaModelo.getRepos().deleteMoneda(codigo);
+            }
+        }
     }
+
+    public void pulsarEnter(KeyEvent keyEvent) {
+        try {
+            if (!valor1.getText().equals("")) {
+                valor1.setOnKeyPressed(event -> {
+                    if (event.getCode() == KeyCode.ENTER) {
+                        pulsarConvertir();
+                    }
+                });
+            }
+            if (!valor2.getText().equals("")) {
+                valor2.setOnKeyPressed(event -> {
+                    if (event.getCode() == KeyCode.ENTER) {
+                        pulsarConvertir();
+                    }
+                });
+            }
+        } catch (NullPointerException e) {
+
+        }
+    }
+
+    public void setMonedaModelo(MonedaModelo monedaModelo) {
+        this.monedaModelo = monedaModelo;
+    }
+
+    public void setMonedaData(ObservableList<Moneda> monedaData) {
+        for(Moneda m: monedaData) {
+            chMonedas.getItems().add(m.getNombre());
+        }
+    }
+
 }

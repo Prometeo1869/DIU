@@ -33,11 +33,11 @@ public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private MonedaModelo monedaModelo;
-    private MonedaRepositoryImpl monedaRepository; //////////////////////////////////////////////////////////////
+    private MonedaRepository monedaRepository; //////////////////////////////////////////////////////////////
     private boolean ok = true;
     private ObservableList<Moneda> monedaData = FXCollections.observableArrayList();
 
-    public Main() throws ExcepcionMoneda {
+    public Main() {
         try {
             this.monedaModelo = new MonedaModelo();
             this.monedaRepository = new MonedaRepositoryImpl(); ///////////////////////////////////////////////
@@ -83,24 +83,17 @@ public class Main extends Application {
             loader.setLocation(Main.class.getResource("view/VentanaPrincipal.fxml"));
             AnchorPane ventanaPrincipal = loader.load();
 
-            // Set person overview into the center of root layout.
             rootLayout.setCenter(ventanaPrincipal);
 
-            //Give the controller access to the Main.
             VentanaPrincipalController vpController = loader.getController();
             vpController.setMain(this);
-            //vpController.setMonedaModelo(this.monedaModelo);
+            vpController.setMonedaModelo(this.monedaModelo);
+            vpController.setMonedaData(monedaData);
 
-            vpController.setMonedaData(monedaRepository.ObtenerListaMonedas());
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ExcepcionMoneda e) {
-            throw new RuntimeException(e);
         }
-    }
-    public ObservableList<Moneda> getMonedaData() {
-        return this.monedaData;
     }
     public void abrirVentanaNueva() {
         try {
@@ -131,5 +124,9 @@ public class Main extends Application {
         } catch (ExcepcionMoneda e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ObservableList<Moneda> getMonedaData() {
+        return this.monedaData;
     }
 }

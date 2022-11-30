@@ -12,8 +12,6 @@ public class MonedaModelo {
     public MonedaModelo() {
 
     }
-
-
     public MonedaRepository getRepos() {
         return repos;
     }
