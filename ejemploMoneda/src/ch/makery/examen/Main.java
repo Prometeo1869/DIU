@@ -1,8 +1,11 @@
 package ch.makery.examen;
 
 import Modelo.ExcepcionMoneda;
+import Modelo.repository.MonedaRepository;
+import Modelo.repository.impl.MonedaRepositoryImpl;
 import ch.makery.examen.controller.RootLayoutController;
 import ch.makery.examen.controller.VentanaPrincipalController;
+import ch.makery.examen.controller.VentanaSecundariaController;
 import ch.makery.examen.model.Moneda;
 import ch.makery.examen.model.MonedaModelo;
 import ch.makery.examen.conexionCasa.MonedaRepo;
@@ -30,14 +33,14 @@ public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private MonedaModelo monedaModelo;
-    private MonedaRepo monedaRepository; //////////////////////////////////////////////////////////////
+    private MonedaRepositoryImpl monedaRepository; //////////////////////////////////////////////////////////////
     private boolean ok = true;
     private ObservableList<Moneda> monedaData = FXCollections.observableArrayList();
 
     public Main() throws ExcepcionMoneda {
         try {
             this.monedaModelo = new MonedaModelo();
-            this.monedaRepository = new MonedaRepo(); ///////////////////////////////////////////////
+            this.monedaRepository = new MonedaRepositoryImpl(); ///////////////////////////////////////////////
             monedaModelo.setRepos(this.monedaRepository);
 
             for (MonedaVO mvo : monedaModelo.obtenerListaMonedas()) {
@@ -86,10 +89,14 @@ public class Main extends Application {
             //Give the controller access to the Main.
             VentanaPrincipalController vpController = loader.getController();
             vpController.setMain(this);
-            vpController.setMonedaModelo(this.monedaModelo);
+            //vpController.setMonedaModelo(this.monedaModelo);
+
+            vpController.setMonedaData(monedaRepository.ObtenerListaMonedas());
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ExcepcionMoneda e) {
+            throw new RuntimeException(e);
         }
     }
     public ObservableList<Moneda> getMonedaData() {
@@ -111,6 +118,9 @@ public class Main extends Application {
             Scene scene = new Scene(root);
             dialogStage.setScene(scene);
 
+            VentanaSecundariaController vsController = loader.getController();
+            vsController.setMonedaData(monedaRepository.ObtenerListaMonedas());
+
             dialogStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,6 +128,8 @@ public class Main extends Application {
             alert.setTitle("ERROR");
             alert.setContentText("No se abre la ventana secundaria");
             alert.showAndWait();
+        } catch (ExcepcionMoneda e) {
+            throw new RuntimeException(e);
         }
     }
 }
