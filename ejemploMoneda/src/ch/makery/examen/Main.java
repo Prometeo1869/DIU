@@ -8,12 +8,10 @@ import ch.makery.examen.controller.VentanaPrincipalController;
 import ch.makery.examen.controller.VentanaSecundariaController;
 import ch.makery.examen.model.Moneda;
 import ch.makery.examen.model.MonedaModelo;
-import ch.makery.examen.conexionCasa.MonedaRepo;
 import ch.makery.examen.util.Convert;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -24,23 +22,22 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import Modelo.MonedaVO;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.util.Iterator;
+
 
 public class Main extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
     private MonedaModelo monedaModelo;
-    private MonedaRepository monedaRepository; //////////////////////////////////////////////////////////////
+    private MonedaRepository monedaRepository;
     private boolean ok = true;
     private ObservableList<Moneda> monedaData = FXCollections.observableArrayList();
 
     public Main() {
         try {
             this.monedaModelo = new MonedaModelo();
-            this.monedaRepository = new MonedaRepositoryImpl(); ///////////////////////////////////////////////
+            this.monedaRepository = new MonedaRepositoryImpl();
             monedaModelo.setRepos(this.monedaRepository);
 
             for (MonedaVO mvo : monedaModelo.obtenerListaMonedas()) {
@@ -112,7 +109,8 @@ public class Main extends Application {
             dialogStage.setScene(scene);
 
             VentanaSecundariaController vsController = loader.getController();
-            vsController.setMonedaData(monedaRepository.ObtenerListaMonedas());
+            vsController.setModelo(this.monedaModelo);
+            vsController.numeroMonedas();
 
             dialogStage.showAndWait();
         } catch (IOException e) {
@@ -121,8 +119,6 @@ public class Main extends Application {
             alert.setTitle("ERROR");
             alert.setContentText("No se abre la ventana secundaria");
             alert.showAndWait();
-        } catch (ExcepcionMoneda e) {
-            throw new RuntimeException(e);
         }
     }
 
