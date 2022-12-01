@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MonedaModelo {
     private MonedaRepository repos;
-    IntegerProperty numero = new SimpleIntegerProperty(0);
+    IntegerProperty numero = new SimpleIntegerProperty(0); // contador de número de monedas
     //private Moneda
     public MonedaModelo() {
 
@@ -44,7 +44,7 @@ public class MonedaModelo {
     public IntegerProperty getNumeroMonedas() {
         return numero;
     }
-
+    //Método para que al Eliminar una moneda se reste del contador de monedas
     public void restarMoneda() {
         this.setNumero(this.getNumero() - 1);
     }

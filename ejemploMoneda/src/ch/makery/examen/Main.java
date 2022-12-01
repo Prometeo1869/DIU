@@ -34,7 +34,7 @@ public class Main extends Application {
     private boolean ok = true;
     private ObservableList<Moneda> monedaData = FXCollections.observableArrayList();
 
-    public Main() {
+    public Main() { //Recupera los datos del repositorio y los inyecta en una ObservableList(monedaData)
         try {
             this.monedaModelo = new MonedaModelo();
             this.monedaRepository = new MonedaRepositoryImpl();
@@ -51,6 +51,7 @@ public class Main extends Application {
             alert.showAndWait();
         }
     }
+    //inicia la primera pantalla
     @Override
     public void start(Stage primaryStage) throws ExcepcionMoneda {
         this.primaryStage = primaryStage;
@@ -58,6 +59,7 @@ public class Main extends Application {
         initRootLayout();
         cargarVentanaPrincipal();
     }
+    //Abre el escenario y le referencia al controlador RootLaoutController
     private void initRootLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -74,6 +76,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+    //carga la escena y referencia al controlador VentanaPrincipalController
     private void cargarVentanaPrincipal() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -92,6 +95,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+    //Abre la ventana secundaria
     public void abrirVentanaNueva() {
         try {
             FXMLLoader loader = new FXMLLoader();
