@@ -44,7 +44,6 @@ public class Main extends Application {
      * The data as an observable list of Reservas.
      */
     private ObservableList<Reserva> reservaData = FXCollections.observableArrayList();
-    private RootLayoutController rootLayoutController;
 
     /**
      * @throws ExceptionCliente

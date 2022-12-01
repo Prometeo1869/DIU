@@ -1,7 +1,6 @@
 package ch.makery.examen.controller;
 
 import ch.makery.examen.Main;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 
