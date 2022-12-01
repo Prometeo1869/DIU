@@ -1,23 +1,14 @@
 package ch.makery.examen.controller;
-
 import Modelo.ExcepcionMoneda;
-import Modelo.MonedaVO;
 import ch.makery.examen.Main;
 import ch.makery.examen.model.Moneda;
 import ch.makery.examen.model.MonedaModelo;
-import ch.makery.examen.util.Convert;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-
-import java.util.ArrayList;
 
 public class VentanaPrincipalController {
 
@@ -35,12 +26,12 @@ public class VentanaPrincipalController {
     }
     @FXML
     private void initialize() throws ExcepcionMoneda {
-
+        //Rescatar los cambios de elección de moneda
         chMonedas.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> cambiarMoneda(newValue))
         );
     }
-
+    //Cambia la moneda con la se va a hacer la conversion cuando la eliges en el Menu(ChoiceBox)
     private void cambiarMoneda(String nombreMoneda) {
         if(nombreMoneda != null) {
             moneda2.setText(nombreMoneda);
@@ -52,22 +43,70 @@ public class VentanaPrincipalController {
         }
         valor2.setText("");
     }
-
+    //Referencia al Main
     public void setMain(Main main) {
         this.main = main;
     }
 
-    public void pulsarConvertir() {
-        if(valor2.getText().equals("")) {
-            float resultado = multiplicador * Float.parseFloat(valor1.getText());
-            valor2.setText("" + resultado);
+    //Métodos de validación y conversión que ocurren cuando se pulsa el boton "Convertir"
+    public void pulsarConvertir() throws NumberFormatException {
+        boolean esValido = true;
+        if(chMonedas.getValue() == null) {
+            esValido = false;
         }
-        if(valor1.getText().equals("")) {
-            float resultado = Float.parseFloat(valor2.getText()) * (2 - multiplicador);
-            valor1.setText("" + resultado);
+        if(esValido) {
+            for (int i = 0; i < valor1.getText().length() && esValido; i++) {
+                if (Character.isLetter(valor1.getText().charAt(i))) {
+                    esValido = false;
+                }
+            }
         }
-    }
+        if(esValido) {
+            for(int i = 0; i < valor2.getText().length() && esValido; i++) {
+                if(Character.isLetter(valor2.getText().charAt(i))) {
+                    esValido = false;
+                }
+            }
+        }
+        if(esValido) {
+            if (valor2.getText().equals("")) {
+                if(Float.parseFloat(valor1.getText()) >= 0) {
+                    float resultado = multiplicador * Float.parseFloat(valor1.getText());
+                    valor2.setText("" + resultado);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Valor negativo");
+                    alert.setContentText("Por favor escriba una cifra positiva");
+                    alert.showAndWait();
+                    valor1.setText("");
+                    valor2.setText("");
+                }
+            }
+            if (valor1.getText().equals("")) {
+                if(Float.parseFloat(valor2.getText()) >= 0) {
+                    float resultado = Float.parseFloat(valor2.getText()) * (2 - multiplicador);
+                    valor1.setText("" + resultado);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Valor negativo");
+                    alert.setContentText("Por favor escriba una cifra positiva");
+                    alert.showAndWait();
+                    valor1.setText("");
+                    valor2.setText("");
+                }
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Formato incorrecto");
+            alert.setContentText("Por favor rellene los campos correctamente");
+            alert.showAndWait();
+            valor1.setText("");
+            valor2.setText("");
+        }
 
+    }
+    //Método que al pulsar el botón "Eliminar" elimine tanto del modelo como de la base de datos
+    //la moneda que esté en ese momento elegida en el menu(ChoiceBox)
     public void pulsarEliminar(ActionEvent actionEvent) throws ExcepcionMoneda {
         valor1.setText("");
         valor2.setText("");
@@ -81,8 +120,9 @@ public class VentanaPrincipalController {
                 monedaModelo.getRepos().deleteMoneda(codigo);
             }
         }
+        monedaModelo.restarMoneda();
     }
-
+    // Método para que la pulsar ENTER se realice el método pulsarConvertir
     public void pulsarEnter(KeyEvent keyEvent) {
         try {
             if (!valor1.getText().equals("")) {
@@ -103,15 +143,14 @@ public class VentanaPrincipalController {
 
         }
     }
-
+    //Reerencia al modelo
     public void setMonedaModelo(MonedaModelo monedaModelo) {
         this.monedaModelo = monedaModelo;
     }
-
+    //Referencia al repositorio
     public void setMonedaData(ObservableList<Moneda> monedaData) {
         for(Moneda m: monedaData) {
             chMonedas.getItems().add(m.getNombre());
         }
     }
-
 }

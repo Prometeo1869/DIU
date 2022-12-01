@@ -3,7 +3,7 @@ package ch.makery.examen.util;
 import Modelo.MonedaVO;
 import ch.makery.examen.model.Moneda;
 
-public class Convert {
+public class Convert { // convierte de Moneda a MonedaVO y viceversa
 
     public static Moneda convertTo(MonedaVO mvo) {
         Moneda m = new Moneda(
