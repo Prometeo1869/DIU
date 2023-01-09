@@ -7,69 +7,69 @@ export default class CalculadoraComponent extends Component {
                <table>
                 <tr>
                     <td>
-                        <button name="AC">AC</button>
+                        <button name="AC" onClick={this.props.clickHandler}>AC</button>
                     </td>
                     <td>
-                        <button name="+/-">+/-</button>
+                        <button name="+/-" onClick={this.props.clickHandler}>+/-</button>
                     </td>
                     <td>
-                        <button name="%">%</button>
+                        <button name="%" onClick={this.props.clickHandler}>%</button>
                     </td>
                     <th>
-                        <button onClick={this.props.operat}>÷</button>
+                        <button onClick={this.props.clickHandler}>÷</button>
                     </th>
                 </tr>
                 <tr>
                     <td>
-                        <button onClick={this.props.num1}>7</button>
+                        <button onClick={this.props.clickHandler}>7</button>
                     </td>
                     <td>
-                        <button>8</button>
+                        <button onClick={this.props.clickHandler}>8</button>
                     </td>
                     <td>
-                        <button>9</button>
+                        <button onClick={this.props.clickHandler}>9</button>
                     </td>
                     <th>
-                        <button>X</button>
+                        <button onClick={this.props.clickHandler}>X</button>
                     </th>
                 </tr>
                 <tr>
                     <td>
-                        <button>4</button>
+                        <button onClick={this.props.clickHandler}>4</button>
                     </td>
                     <td>
-                        <button>5</button>
+                        <button onClick={this.props.clickHandler}>5</button>
                     </td>
                     <td>
-                        <button>6</button>
+                        <button onClick={this.props.clickHandler}>6</button>
                     </td>
                     <th>
-                        <button>-</button>
+                        <button onClick={this.props.clickHandler}>-</button>
                     </th>
                 </tr>
                 <tr>
                     <td>
-                        <button>1</button>
+                        <button onClick={this.props.clickHandler}>1</button>
                     </td>
                     <td>
-                        <button>2</button>
+                        <button onClick={this.props.clickHandler}>2</button>
                     </td>
                     <td>
-                        <button>3</button>
+                        <button onClick={this.props.clickHandler}>3</button>
                     </td>
                     <th>
-                        <button>+</button>
+                        <button onClick={this.props.clickHandler}>+</button>
                     </th>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button>0</button>
+                        <button onClick={this.props.clickHandler}>0</button>
                     </td>
                     <td>
-                        <button>.</button>
+                        <button onClick={this.props.clickHandler}>.</button>
                     </td>
                     <th>
-                        <button>=</button>
+                        <button onClick={this.props.clickHandler}>=</button>
                     </th>
                 </tr>
                </table>
