@@ -103,7 +103,7 @@ public class VPOverviewController {
             // BORRA DE LA APP
             clienteTable.getItems().remove(posicion);
             // BORRA DE LA BASE DE DATOS
-            modelo.getRep().deleteCliente(dni);
+            modelo.borrarCliente(dni);
         } else {
             // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -123,8 +123,7 @@ public class VPOverviewController {
         if (okClicked) {
             main.getClienteData().add(tempCliente);
             // AÑADE A LA BASE DE DATOS
-            modelo.getRep().addCliente(tempCliente);
-
+            modelo.addCliente(tempCliente);
             this.ordenarClientes();
         }
     }
@@ -139,7 +138,7 @@ public class VPOverviewController {
             boolean okClicked = main.mostrarClienteEditDialog(selectedCliente);
             if (okClicked) {
                 mostrarClienteDetalle(selectedCliente);
-                modelo.getRep().editCliente(selectedCliente);
+                modelo.editarCliente(selectedCliente);
                 this.ordenarClientes();
             }
         } else {

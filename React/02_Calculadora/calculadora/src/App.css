@@ -1,0 +1,37 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  width:fill;
+  height: fill;
+  font-size: xx-large;
+}
+table {
+  width: 50vmax;
+  height: 40vmax;
+}
+th button {
+  background-color: orange;
+  color: white;
+}
+.resultado {
+  width: 49.5vmax;
+  color:white;
+  background-color: gray;
+}
+h1 {
+  float: right;
+  margin-right: 20px;
+  font-weight: normal;
+  font-size: xx-large;
+}

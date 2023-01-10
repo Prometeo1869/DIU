@@ -20,4 +20,16 @@ public class ClienteModelo {
     public ArrayList<ClienteVO> obtenerClientes() throws ExceptionCliente {
         return this.rep.ObtenerListaClientes();
     }
+
+    public void borrarCliente(String dni) throws ExceptionCliente {
+            this.rep.deleteCliente(dni);
+    }
+
+    public void addCliente(Cliente tempCliente) throws ExceptionCliente {
+        this.rep.addCliente(tempCliente);
+    }
+
+    public void editarCliente(Cliente selectedCliente) throws ExceptionCliente {
+        this.rep.editCliente(selectedCliente);
+    }
 }
