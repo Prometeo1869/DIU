@@ -1,79 +1,80 @@
-import React, { Component } from 'react'
+import Boton from "./Boton"
 
-export default class CalculadoraComponent extends Component {
-    render(){
-        return (
-            <div>
-               <table>
+export default function CalculadoraComponent({clickHandle}) {
+
+    const handleClick = buttonName => clickHandle(buttonName)
+
+    return (
+        <div>
+            <table>
                 <tr>
                     <td>
-                        <button name="AC" onClick={this.props.clickHandler}>AC</button>
+                        <Boton name="AC" clickHandle={handleClick}></Boton>
                     </td>
                     <td>
-                        <button name="+/-" onClick={this.props.clickHandler}>+/-</button>
+                        <Boton name="+/-" clickHandle={handleClick}></Boton>
                     </td>
                     <td>
-                        <button name="%" onClick={this.props.clickHandler}>%</button>
+                        <Boton name="%" clickHandle={handleClick}></Boton>
                     </td>
                     <th>
-                        <button onClick={this.props.clickHandler}>÷</button>
+                        <Boton name="÷" clickHandle={handleClick}></Boton>
                     </th>
                 </tr>
                 <tr>
                     <td>
-                        <button onClick={this.props.clickHandler}>7</button>
+                        <Boton name="7" clickHandle={handleClick}></Boton>
                     </td>
                     <td>
-                        <button onClick={this.props.clickHandler}>8</button>
+                        <Boton name="8" clickHandle={handleClick}></Boton>
                     </td>
                     <td>
-                        <button onClick={this.props.clickHandler}>9</button>
+                        <Boton name="9" clickHandle={handleClick}></Boton>
                     </td>
                     <th>
-                        <button onClick={this.props.clickHandler}>X</button>
+                        <Boton name="x" clickHandle={handleClick}></Boton>
                     </th>
                 </tr>
                 <tr>
                     <td>
-                        <button onClick={this.props.clickHandler}>4</button>
+                        <Boton name="4" clickHandle={handleClick}></Boton>
                     </td>
                     <td>
-                        <button onClick={this.props.clickHandler}>5</button>
+                        <Boton name="5" clickHandle={handleClick}></Boton>
                     </td>
                     <td>
-                        <button onClick={this.props.clickHandler}>6</button>
+                        <Boton name="6" clickHandle={handleClick}></Boton>
                     </td>
                     <th>
-                        <button onClick={this.props.clickHandler}>-</button>
+                        <Boton name="-" clickHandle={handleClick}></Boton>
                     </th>
                 </tr>
                 <tr>
                     <td>
-                        <button onClick={this.props.clickHandler}>1</button>
+                        <Boton name="1" clickHandle={handleClick}></Boton>
                     </td>
                     <td>
-                        <button onClick={this.props.clickHandler}>2</button>
+                        <Boton name="2" clickHandle={handleClick}></Boton>
                     </td>
                     <td>
-                        <button onClick={this.props.clickHandler}>3</button>
+                        <Boton name="3" clickHandle={handleClick}></Boton>
                     </td>
                     <th>
-                        <button onClick={this.props.clickHandler}>+</button>
+                        <Boton name="+" clickHandle={handleClick}></Boton>
                     </th>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button onClick={this.props.clickHandler}>0</button>
+                        <Boton name="0" clickHandle={handleClick}></Boton>
                     </td>
                     <td>
-                        <button onClick={this.props.clickHandler}>.</button>
+                        <Boton name="." clickHandle={handleClick}></Boton>
                     </td>
                     <th>
-                        <button onClick={this.props.clickHandler}>=</button>
+                        <Boton name="=" clickHandle={handleClick}></Boton>
                     </th>
                 </tr>
-               </table>
-            </div>
-        )
-    }
+            </table>
+        </div>
+    );
 }

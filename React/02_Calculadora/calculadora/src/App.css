@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.App-header {
+.component-app {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -12,23 +12,27 @@
 }
 
 button {
-  width:fill;
+  width: fill;
   height: fill;
   font-size: xx-large;
 }
+
 table {
   width: 50vmax;
-  height: 40vmax;
+  height: 60vh;
 }
+
 th button {
   background-color: orange;
   color: white;
 }
+
 .resultado {
   width: 49.5vmax;
-  color:white;
+  color: white;
   background-color: gray;
 }
+
 h1 {
   float: right;
   margin-right: 20px;

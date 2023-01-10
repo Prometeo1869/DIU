@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
+export default function ResultadoComponent({value}) {
 
-export default class ResultadoComponent extends Component {
-    render() {
-        return (
-            <div className='resultado'>
-                <h1>{this.props.value}</h1>
-            </div>
-        )
-    }
+    return (
+        <div className='resultado'>
+            <h1>{value}</h1>
+        </div>
+    )
+
 }
