@@ -1,0 +1,35 @@
+.App {
+  text-align: center;
+  background: rgb(2,0,36);
+  background: linear-gradient(38deg, rgba(2,0,36,1) 0%, rgba(142,120,198,1) 35%, rgba(161,72,189,1) 100%);
+}
+
+.App-header {
+  min-height: 100vh;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color:rgb(41, 0, 145);
+}
+
+button {
+  margin: 15px;
+  background-color: goldenrod;
+  padding: 5px;
+  border: 2px solid rgb(41, 0, 145);
+  border-radius: 8px;
+  min-width: 10em;
+  color:rgb(41, 0, 145);
+  font-weight: bold;
+}
+
+.cont {
+  font-size: 60pt;
+}
+
+.buttonsRed
+{
+background-color: red;
+}

@@ -1,0 +1,12 @@
+.container {
+    margin: 100px;
+    max-width: 80vmax;
+}
+
+.boton {
+    margin-left: 12px;
+}
+#loading {
+    display: none;
+    margin-left: 20px;
+}
