@@ -1,0 +1,6 @@
+# Abrir Spring Tool Suite en PC clase
+
+ $  cd ~/"Spring Tool Suite"/sts-4.16.1.RELEASE
+ 
+ $  ./SpringToolSuite4 
+

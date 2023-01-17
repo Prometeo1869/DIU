@@ -8,7 +8,7 @@ class Tabla extends Component {
 
         return (
             <tr key={index}>
-                <td>{data[0].phonetics[1].text}</td>
+                <td>{data[0].phonetics[0].text}</td>
                 <td>{data[0].meanings[0].definitions[0].definition}</td>
             </tr>
         )
