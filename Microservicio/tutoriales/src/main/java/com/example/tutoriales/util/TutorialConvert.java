@@ -12,9 +12,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TutorialConvert {
 	
-	private ModelMapper mapper;
+	private final ModelMapper mapper;
 	
-	public TutorialDTO convertTo(Tutorial tutorial) {
+	public TutorialDTO convertToDTO(Tutorial tutorial) {
 		return mapper.map(tutorial, TutorialDTO.class);
 	}
 	

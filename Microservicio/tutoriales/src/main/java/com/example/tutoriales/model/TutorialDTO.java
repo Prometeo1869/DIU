@@ -1,17 +1,20 @@
 package com.example.tutoriales.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor @AllArgsConstructor
 public class TutorialDTO {
 
-	String id;
+	private String id;
 	
-	String title;
-	String description;
-	Boolean published;
+	private String title;
+	private String description;
+	private Boolean published;
 }

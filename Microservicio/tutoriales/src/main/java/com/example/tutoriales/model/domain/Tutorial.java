@@ -13,10 +13,10 @@ import lombok.Data;
 public class Tutorial {
 
 	@Id
-	String id;
+	private String id;
 	
-	String title;
-	String description;
-	Boolean published;
+	private String title;
+	private String description;
+	private Boolean published;
 	
 }
