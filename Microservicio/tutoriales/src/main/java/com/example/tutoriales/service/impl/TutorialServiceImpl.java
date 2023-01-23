@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.tutoriales.model.TutorialDTO;
+import com.example.tutoriales.model.domain.Tutorial;
 import com.example.tutoriales.repository.Conection;
 import com.example.tutoriales.service.TutorialService;
 import com.example.tutoriales.util.TutorialConvert;
@@ -37,6 +38,49 @@ public class TutorialServiceImpl implements TutorialService {
 		return conn.findAll().stream().map(mapper::convertToDTO).collect(Collectors.toList());
 	}
 
+	@Override
+	public TutorialDTO getById(String id) {
+		Tutorial tutorial = conn.findById(id).orElse(null);
+		return tutorial != null ? mapper.convertToDTO(tutorial) : null;
+	}
+
+	@Override
+	public List<TutorialDTO> findByPublished(boolean b) {
+		return conn.findByPublished(b).stream().map(mapper::convertToDTO).collect(Collectors.toList());
+	}
+
+	@Override
+	public TutorialDTO updateTutorial(String id, TutorialDTO dto) {
+		Tutorial updating = conn.findById(id).orElse(null);
+		if (updating == null) {
+			return null;
+		} else {
+			updating.setTitle(dto.getTitle());
+			updating.setDescription(dto.getDescription());
+			updating.setPublished(dto.getPublished());
+			conn.save(updating);
+			return mapper.convertToDTO(updating);
+		}
+	}
+
+	@Override
+	public void deleteTutorial(String id) {
+		conn.deleteById(id);
+	}
+
+	@Override
+	public void deleteAllTutorials() {
+		conn.deleteAll();
+	}
 	
+	@Override
+	public boolean exist(String id) {
+		return conn.existsById(id);
+	}
+
+	@Override
+	public long count() {
+		return conn.count();
+	}
 
 }

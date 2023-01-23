@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,5 +50,54 @@ public class TutorialController {
 		}
 	}
 	
+	@GetMapping("/tutorial/{id}")
+	public ResponseEntity<?> getTutorialById(@PathVariable String id) {
+		TutorialDTO dto = service.getById(id);
+		if(dto == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(dto);
+		}
+	}
 
+	@GetMapping("/tutorials/published")
+	public ResponseEntity<?> getTutorialsPublished() {
+		List<TutorialDTO> lista = service.findByPublished(true);
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(lista);
+		}
+	}
+	
+	@PutMapping("/tutorials/{id}")
+	public ResponseEntity<?> updateTutorial(@PathVariable String id, @RequestBody TutorialDTO dto) {
+		TutorialDTO updating = service.updateTutorial(id, dto);
+		if (updating == null) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(updating);
+		}
+	}
+	
+	@DeleteMapping("/tutorials/{id}")
+	public ResponseEntity<?> deleteTutorial(@PathVariable String id) {
+		if (service.exist(id)) {
+			service.deleteTutorial(id);
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@DeleteMapping("/tutorials")
+	public ResponseEntity<?> deleteAllTutorials() {
+		if(service.count() > 0) {
+			service.deleteAllTutorials();
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
 }
