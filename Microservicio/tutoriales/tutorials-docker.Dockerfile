@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:19
 #Indica la imagen base sobre la que se construirá la
 #aplicación dentro del contenedor.
 COPY target/tutoriales-0.0.1-SNAPSHOT.jar /tutorialsapp2.jar

@@ -1,0 +1,1 @@
+sudo ssh -i "ClavePruebaMicroserviceTutorials.pem" ubuntu@ec2-54-174-14-49.compute-1.amazonaws.com

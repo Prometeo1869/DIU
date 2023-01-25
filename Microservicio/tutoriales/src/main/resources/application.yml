@@ -1,5 +1,5 @@
 server:
-  port: 8082 #Asignamos el puerto del servidor
+  port: 8080 #Asignamos el puerto del servidor
 spring:
   application:
     name: tutorials-service #Nombre de la aplicación
@@ -10,6 +10,6 @@ spring:
   #los beans.
   data:
     mongodb:
-      host: 172.28.0.11 #definimos el host donde se alojará
+      host: 182.28.0.11 #definimos el host donde se alojará
   #mongodb.
       port: 27017 #definimos el puerto donde se alojará mongodb.
