@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import TutorialDataService from "../services/tutorial.service";
+import TutorialDataService from "../services/tutorial.service"; //importa axios
 import { Link } from "react-router-dom";
 
 export default class TutorialsList extends Component {
@@ -118,7 +118,7 @@ export default class TutorialsList extends Component {
             {/*El operedor && lógico. Los dos elementos tienen que ser true, en este caso no vacio, para que se ejecute la sentencia */}
             {/*si tutorials está vacio , no se ejecuta el map*/}
 
-            {tutorials &&
+            {tutorials && //Si el array no está vacio
               tutorials.map((tutorial, index) => (
                 <li
               /* Cambiamos la clase del elemento de la lista seleccionado. Ponemos fondo azul*/
@@ -175,6 +175,7 @@ export default class TutorialsList extends Component {
               >
                 Edit
               </Link>
+              
             </div>
           ) : (
             <div>

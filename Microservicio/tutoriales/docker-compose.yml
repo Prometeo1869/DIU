@@ -19,7 +19,7 @@ services: #Esta etiqueta es usada para definir los contenedores que instalaremos
     expose:
       - 27017 #Expone los puertos sin publicarlos al host.
   app-tutorials:
-    image: prometeo1869/tutorials:4
+    image: prometeo1869/tutorials:5
     container_name: tutorialsapp
     networks:
       mired2:
@@ -27,6 +27,6 @@ services: #Esta etiqueta es usada para definir los contenedores que instalaremos
     expose:
       - 8080
     ports:
-      - "8080:8080"
+      - "8082:8080"
     depends_on: #En esta etiqueta colocamos de qué servicio depende este contenedor
       - db
