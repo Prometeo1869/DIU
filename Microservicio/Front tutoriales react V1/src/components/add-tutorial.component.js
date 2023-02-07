@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import TutorialDataService from "../services/tutorial.service";
 
 export default class AddTutorial extends Component {
+    
     constructor(props) {
         super(props);
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.updatePublished = this.updatePublished.bind(this);
+        this.publishedChange = this.publishedChange.bind(this);
         this.addTutorial = this.addTutorial.bind(this);
 
         this.state = {
@@ -19,10 +20,6 @@ export default class AddTutorial extends Component {
             message: ""
         };
     }
-
-    //   componentDidMount() {
-    //     this.getTutorial(this.props.match.params.id);
-    //   }
 
     onChangeTitle(e) {
         const title = e.target.value;
@@ -48,13 +45,17 @@ export default class AddTutorial extends Component {
         }));
     }
 
-    publishedChange(status) {
-        var data = {
-            title: this.state.currentTutorial.title,
-            description: this.state.currentTutorial.description,
-            published: status
-        };
+    publishedChange(e) {
+            const published = e.target.checked;
 
+            this.setState(function (prevState) {
+                return {
+                    currentTutorial: {
+                        ...prevState.currentTutorial,
+                        published: published
+                    }
+                };
+            });
     }
 
     addTutorial() {
@@ -73,11 +74,8 @@ export default class AddTutorial extends Component {
     }
 
     render() {
-        const { currentTutorial } = this.state;
-
         return (
             <div>
-                {currentTutorial ? (
                     <div className="edit-form">
                         <h4>Tutorial</h4>
                         <form>
@@ -87,7 +85,7 @@ export default class AddTutorial extends Component {
                                     type="text"
                                     className="form-control"
                                     id="title"
-                                    value={currentTutorial.title}
+                                    value={this.state.title}
                                     onChange={this.onChangeTitle}
                                 />
                             </div>
@@ -97,50 +95,29 @@ export default class AddTutorial extends Component {
                                     type="text"
                                     className="form-control"
                                     id="description"
-                                    value={currentTutorial.description}
+                                    value={this.state.description}
                                     onChange={this.onChangeDescription}
                                 />
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={publishedChange}/>
+                                <input class="form-check-input" type="checkbox" checked={this.state.published} onChange={this.publishedChange}/>
                                     <label class="form-check-label" for="flexCheckDefault">
                                         Published
                                     </label>
                             </div>
                         </form>
 
-                        {currentTutorial.published ? (
-                            <button
-                                className="badge badge-primary mr-2"
-                                onClick={() => this.updatePublished(false)}
-                            >
-                                UnPublish
-                            </button>
-                        ) : (
-                            <button
-                                className="badge badge-primary mr-2"
-                                onClick={() => this.updatePublished(true)}
-                            >
-                                Publish
-                            </button>
-                        )}
-
                         <button
                             type="submit"
                             className="badge badge-success"
-                            onClick={this.create}
+                            onClick={this.addTutorial}
                         >
                             Add
                         </button>
                         <p>{this.state.message}</p>
                     </div>
-                ) : (
-                    <div>
-                        <br />
-                        <p>Please click on a Tutorial...</p>
-                    </div>
-                )}
+
             </div>
         );
     }
