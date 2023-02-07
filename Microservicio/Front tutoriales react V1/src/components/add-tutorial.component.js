@@ -106,7 +106,7 @@ export default class AddTutorial extends Component {
                                         Published
                                     </label>
                             </div>
-                        </form>
+                        </form><br></br>
 
                         <button
                             type="submit"
