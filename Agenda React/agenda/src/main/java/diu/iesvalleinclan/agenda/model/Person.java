@@ -1,0 +1,23 @@
+package diu.iesvalleinclan.agenda.model;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
+
+@Document(collection = "agenda")
+@JsonPropertyOrder({"id", "firstName", "lastName", "street", "postalCode", "birthday"})
+@Data
+public class Person {
+    @Id
+    private Integer id;
+
+    private String firstName;
+    private String lastName;
+    private String street;
+    private Integer postalCode;
+    private String city;
+    private LocalDate birthday;
+}
