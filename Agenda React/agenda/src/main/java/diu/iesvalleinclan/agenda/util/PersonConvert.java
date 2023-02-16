@@ -3,9 +3,9 @@ package diu.iesvalleinclan.agenda.util;
 import diu.iesvalleinclan.agenda.model.Person;
 import diu.iesvalleinclan.agenda.model.dto.PersonDTO;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

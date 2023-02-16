@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 
 @Document(collection = "agenda")
-@JsonPropertyOrder({"id", "firstName", "lastName", "street", "postalCode", "birthday"})
+@JsonPropertyOrder({"id", "firstName", "lastName", "street", "postalCode", "city", "birthday"})
 @Data
 public class Person {
     @Id

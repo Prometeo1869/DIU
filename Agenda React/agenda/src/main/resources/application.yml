@@ -1,15 +1,12 @@
 server:
-  port: 8080 #Asignamos el puerto del servidor
+  port: 8081
 spring:
   application:
-    name: agenda #Nombre de la aplicación
+    name: agenda
   main:
     allow-bean-definition-overriding: true
-  #Al hacer esto, le estamos diciendo a Spring Boot que permita
-  #la anulación de beans sin ningún cambio en las definiciones de
-  #los beans.
   data:
     mongodb:
-      host: 182.28.0.11 #definimos el host donde se alojará
-      #mongodb.
-      port: 27017 #definimos el puerto donde se alojará mongodb.
+      host: localhost
+      port: 27017
+      database: agenda

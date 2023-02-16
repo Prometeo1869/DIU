@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class PersonController {
 
     private final PersonService service;
@@ -24,31 +25,22 @@ public class PersonController {
     @GetMapping("/persons/{lastName}")
     public ResponseEntity<?> findByTitleContaining(@PathVariable String lastName) {
         List<PersonDTO> lista = service.getByLastName(lastName);
-        if (lista == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(lista);
-        }
+
+        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/persons")
     public ResponseEntity<?> findAll() {
         List<PersonDTO> lista = service.getPersons();
-        if (lista.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(lista);
-        }
+
+        return ResponseEntity.ok(lista);
     }
 
-    @GetMapping("/tutorial/{id}")
+    @GetMapping("/persons/{id}")
     public ResponseEntity<?> getPersonById(@PathVariable Integer id) {
         PersonDTO dto = service.getById(id);
-        if(dto == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(dto);
-        }
+
+        return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/persons/{id}")
