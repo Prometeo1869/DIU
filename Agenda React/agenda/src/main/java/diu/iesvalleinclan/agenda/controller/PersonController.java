@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public class PersonaController {
+public class PersonController {
 
     private final PersonService service;
 
@@ -19,7 +19,6 @@ public class PersonaController {
     @PostMapping("/persons")
     public ResponseEntity<?> createPerson(@RequestBody PersonDTO person) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createdPerson(person));
-
     }
 
     @GetMapping("/persons/{lastName}")

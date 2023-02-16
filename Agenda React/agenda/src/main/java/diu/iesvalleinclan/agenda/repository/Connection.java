@@ -4,9 +4,9 @@ import diu.iesvalleinclan.agenda.model.Person;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Repository
 public interface Connection extends MongoRepository<Person, Integer> {
-    Arrays findByLastName(String lastName);
+    List<Person> findByLastName(String lastName);
 }

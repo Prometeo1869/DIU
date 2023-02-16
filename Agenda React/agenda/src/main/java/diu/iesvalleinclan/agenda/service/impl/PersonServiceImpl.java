@@ -1,5 +1,6 @@
 package diu.iesvalleinclan.agenda.service.impl;
 
+import diu.iesvalleinclan.agenda.model.Person;
 import diu.iesvalleinclan.agenda.model.dto.PersonDTO;
 import diu.iesvalleinclan.agenda.repository.Connection;
 import diu.iesvalleinclan.agenda.service.PersonService;
@@ -28,36 +29,49 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<PersonDTO> getPersons() {
-        return null;
+        return conn.findAll().stream().map(mapper::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public PersonDTO getById(Integer id) {
-        return null;
+        Person person = conn.findById(id).orElse(null);
+        return person != null ? mapper.convertToDTO(person) : null;
     }
 
     @Override
     public PersonDTO updatePerson(Integer id, PersonDTO dto) {
-        return null;
+        Person updating = conn.findById(id).orElse(null);
+        if (updating == null) {
+            return null;
+        } else {
+            updating.setFirstName(dto.getFirstName());
+            updating.setLastName(dto.getLastName());
+            updating.setStreet(dto.getStreet());
+            updating.setPostalCode(dto.getPostalCode());
+            updating.setCity(dto.getCity());
+            updating.setBirthday(dto.getBirthday());
+            conn.save(updating);
+            return mapper.convertToDTO(updating);
+        }
     }
 
     @Override
     public boolean exist(Integer id) {
-        return false;
+        return conn.existsById(id);
     }
 
     @Override
     public void deletePerson(Integer id) {
-
+        conn.deleteById(id);
     }
 
     @Override
     public long count() {
-        return 0;
+        return conn.count();
     }
 
     @Override
     public void deleteAllPersons() {
-
+        conn.deleteAll();
     }
 }
