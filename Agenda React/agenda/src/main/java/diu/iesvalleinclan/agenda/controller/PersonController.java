@@ -72,4 +72,17 @@ public class PersonController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /* POST EJEMPLO
+            {
+	            "id" : 1,
+  	            "firtName" : "Juan",
+              	"lastName" : "Cebrian",
+  	            "street" : "Urquiza",
+  	            "postalCode" : 41003,
+  	            "city" : "Sevilla",
+  	            "birthday" : "1984-08-16"
+            }
+     */
+
 }
