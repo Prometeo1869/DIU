@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import './App.css';
+import "./App.css";
 
 import AddProduct from "./components/add-product.component";
-import Product from "./components/products.component";
+import Product from "./components/product.component";
 import ProductList from "./components/products-list.component";
 
 class App extends Component {
@@ -31,9 +31,9 @@ class App extends Component {
 
         <div className="container mt-3">
           <Switch>
-            <Route exact path={["/", "/products"]} component={ProductList} /> 
-          <Route exact path="/add" component={AddProduct} />
-          <Route path="/tutorials/:id" component={Product} />
+            <Route exact path={["/", "/products"]} component={ProductList} />
+            <Route exact path="/add" component={AddProduct} />
+            <Route path="/products/:id" component={Product} />
           </Switch>
         </div>
       </div>
