@@ -1,22 +1,21 @@
 import React, { Component } from "react";
 import ProductDataService from "../services/product.service";
 
-export default class Tutorial extends Component {
+export default class Product extends Component {
   constructor(props) {
     super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeId = this.onChangeId.bind(this);
+    this.onChangeStock = this.onChangeStock.bind(this);
+    this.onChangePrice = this.onChangePrice.bind(this);
     this.getTutorial = this.getTutorial.bind(this);
-    this.updatePublished = this.updatePublished.bind(this);
-    this.updateTutorial = this.updateTutorial.bind(this);
-    this.deleteTutorial = this.deleteTutorial.bind(this);
+    this.updateProduct = this.updateProduct.bind(this);
+    this.deleteProduct = this.deleteProduct.bind(this);
 
     this.state = {
-      currentTutorial: {
+      currentProduct: {
         id: null,
-        title: "",
-        description: "",
-        published: false
+        stock: 0,
+        price: 0
       },
       message: ""
     };
@@ -26,26 +25,37 @@ export default class Tutorial extends Component {
     this.getTutorial(this.props.match.params.id);
   }
 
-  onChangeTitle(e) {
-    const title = e.target.value;
+  onChangeId(e) {
+    const id = e.target.value;
 
     this.setState(function(prevState) {
       return {
-        currentTutorial: {
-          ...prevState.currentTutorial,
-          title: title
+        currentProduct: {
+          ...prevState.currentProduct,
+          id: id
         }
       };
     });
   }
 
-  onChangeDescription(e) {
-    const description = e.target.value;
+  onChangeStock(e) {
+    const stock = e.target.value;
     
     this.setState(prevState => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
-        description: description
+      currentProduct: {
+        ...prevState.currentProduct,
+        stock: stock
+      }
+    }));
+  }
+
+  onChangePrice(e) {
+    const price = e.target.value;
+    
+    this.setState(prevState => ({
+      currentProduct: {
+        ...prevState.currentProduct,
+        price: price
       }
     }));
   }
@@ -54,7 +64,7 @@ export default class Tutorial extends Component {
     ProductDataService.get(id)
       .then(response => {
         this.setState({
-          currentTutorial: response.data
+          currentProduct: response.data
         });
         console.log(response.data);
       })
@@ -63,38 +73,15 @@ export default class Tutorial extends Component {
       });
   }
 
-  updatePublished(status) {
-    var data = {
-      id: this.state.currentTutorial.id,
-      title: this.state.currentTutorial.title,
-      description: this.state.currentTutorial.description,
-      published: status
-    };
-
-    ProductDataService.update(this.state.currentTutorial.id, data)
-      .then(response => {
-        this.setState(prevState => ({
-          currentTutorial: {
-            ...prevState.currentTutorial,
-            published: status
-          }
-        }));
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
-  updateTutorial() {
+  updateProduct() {
     ProductDataService.update(
-      this.state.currentTutorial.id,
-      this.state.currentTutorial
+      this.state.currentProduct.id,
+      this.state.currentProduct
     )
       .then(response => {
         console.log(response.data);
         this.setState({
-          message: "The tutorial was updated successfully!"
+          message: "El producto fue modificado!"
         });
       })
       .catch(e => {
@@ -102,11 +89,11 @@ export default class Tutorial extends Component {
       });
   }
 
-  deleteTutorial() {    
-    ProductDataService.delete(this.state.currentTutorial.id)
+  deleteProduct() {    
+    ProductDataService.delete(this.state.currentProduct.id)
       .then(response => {
         console.log(response.data);
-        this.props.history.push('/tutorials')
+        this.props.history.push('/products')
       })
       .catch(e => {
         console.log(e);
@@ -114,79 +101,67 @@ export default class Tutorial extends Component {
   }
 
   render() {
-    const { currentTutorial } = this.state;
+    const { currentProduct } = this.state;
 
     return (
       <div>
-        {currentTutorial ? (
+        {currentProduct ? (
           <div className="edit-form">
-            <h4>Tutorial</h4>
+            <h4>Producto</h4>
             <form>
               <div className="form-group">
-                <label htmlFor="title">Title</label>
+                <label htmlFor="title">Id</label>
                 <input
                   type="text"
                   className="form-control"
                   id="title"
-                  value={currentTutorial.title}
-                  onChange={this.onChangeTitle}
+                  value={currentProduct.id}
+                  onChange={this.onChangeId}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="stock">Stock</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="description"
-                  value={currentTutorial.description}
-                  onChange={this.onChangeDescription}
+                  id="stock"
+                  value={currentProduct.stock}
+                  onChange={this.onChangeStock}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="price">Precio</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="price"
+                  value={currentProduct.price}
+                  onChange={this.onChangePrice}
                 />
               </div>
 
-              <div className="form-group">
-                <label>
-                  <strong>Status:</strong>
-                </label>
-                {currentTutorial.published ? "Published" : "Pending"}
-              </div>
             </form>
-
-            {currentTutorial.published ? (
-              <button
-                className="badge badge-primary mr-2"
-                onClick={() => this.updatePublished(false)}
-              >
-                UnPublish
-              </button>
-            ) : (
-              <button
-                className="badge badge-primary mr-2"
-                onClick={() => this.updatePublished(true)}
-              >
-                Publish
-              </button>
-            )}
 
             <button
               className="badge badge-danger mr-2"
-              onClick={this.deleteTutorial}
+              onClick={this.deleteProduct}
             >
-              Delete
+              Borrar
             </button>
 
             <button
               type="submit"
               className="badge badge-success"
-              onClick={this.updateTutorial}
+              onClick={this.updateProduct}
             >
-              Update
+              Modificar
             </button>
             <p>{this.state.message}</p>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a Tutorial...</p>
+            <p>Selecciona un producto...</p>
           </div>
         )}
       </div>

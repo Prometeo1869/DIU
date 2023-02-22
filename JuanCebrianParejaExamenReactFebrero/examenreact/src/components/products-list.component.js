@@ -5,41 +5,32 @@ import { Link } from "react-router-dom";
 export default class ProductList extends Component {
   constructor(props) {
     super(props);
-    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
     this.retrieveProducts = this.retrieveProducts.bind(this);
     this.refreshList = this.refreshList.bind(this);
-    this.setActiveTutorial = this.setActiveTutorial.bind(this);
-    this.removeAllTutorials = this.removeAllTutorials.bind(this);
+    this.setActiveProduct = this.setActiveProduct.bind(this);
+    //this.removeAllTutorials = this.removeAllTutorials.bind(this);
     
 
     //Hacemos el bind de los métodos porque al usar estos métodos en gestores de eventos los componentes basados
     //en clases pierden el ámbito.
     this.state = {
-      tutorials: [], //lista de tutoriales
-      currentTutorial: null, //tutorial seleccionado de la lista
+      products: [],         //lista de productos
+      currentProduct: null, //producto seleccionado de la lista
       currentIndex: -1,
       searchTitle: ""
     };
   }
-  //Cuando se carga el componente, se realiza la petición de tutoriales a la API
-  //El método retrieveTutorials provoca la actualización del estado, y por tanto la re-renderización del componente
+  //Cuando se carga el componente, se realiza la petición de productos a la API
+  //El método retrieveProducts provoca la actualización del estado, y por tanto la re-renderización del componente
   componentDidMount() {
     this.retrieveProducts();
-  }
-
-  onChangeSearchTitle(e) {
-    const searchTitle = e.target.value;
-
-    this.setState({
-      searchTitle: searchTitle
-    });
   }
 
   retrieveProducts() {
     ProductDataService.getAll()
       .then(response => {
         this.setState({
-          tutorials: response.data
+          products: response.data
         });
         console.log(response.data);
       })
@@ -49,21 +40,21 @@ export default class ProductList extends Component {
   }
 
   refreshList() {
-    this.retrieveTutorials();
+    this.retrieveProducts();
     this.setState({
-      currentTutorial: null,
+      currentProduct: null,
       currentIndex: -1
     });
   }
 
-  setActiveTutorial(tutorial, index) {
+  setActiveProduct(producto, index) {
     this.setState({
-      currentTutorial: tutorial,
+      currentProduct: producto,
       currentIndex: index
     });
   }
 
-  removeAllTutorials() {
+  /*removeAllTutorials() {
     ProductDataService.deleteAll()
       .then(response => {
         console.log(response.data);
@@ -72,11 +63,11 @@ export default class ProductList extends Component {
       .catch(e => {
         console.log(e);
       });
-  }
+  }*/
 
 
   render() {
-    const { tutorials, currentTutorial, currentIndex } = this.state;
+    const { products, currentProduct, currentIndex } = this.state;
     //ponemos los distintos elementos del estado en variables para simplificar su acceso dentro del método
     return (
       <div className="list row">
@@ -88,53 +79,53 @@ export default class ProductList extends Component {
             {/*El operedor && lógico. Los dos elementos tienen que ser true, en este caso no vacio, para que se ejecute la sentencia */}
             {/*si tutorials está vacio , no se ejecuta el map*/}
 
-            {tutorials && //Si el array no está vacio
-              tutorials.map((tutorial, index) => (
+            {products && //Si el array no está vacio
+              products.map((producto, index) => (
                 <li
               /* Cambiamos la clase del elemento de la lista seleccionado. Ponemos fondo azul*/
                   className={
                     "list-group-item " +
                     (index === currentIndex ? "active" : "")
                   }
-                  onClick={() => this.setActiveTutorial(tutorial, index)}
+                  onClick={() => this.setActiveProduct(producto, index)}
                   key={index}
                 >
-                  {tutorial.title}
+                  Producto {producto.id}
                 </li>
               ))}
           </ul>
 
-          <button
+          {/*<button
             className="m-3 btn btn-sm btn-danger"
             onClick={this.removeAllTutorials}
           >
             Borrar Todo
-          </button>
+                </button>*/}
         </div>
         <div className="col-md-6">
-          {/*Renderizado condicional. Si current tutorial el null se dibuja lo de abajo. Si no,*/}
-          {/*se dibuja "Please click on a Tutorial..." ver más abajo.*/}
-          {currentTutorial ? (
+          {/*Renderizado condicional. Si current producto el null se dibuja lo de abajo. Si no,*/}
+          {/*se dibuja "Please click on a Producto..." ver más abajo.*/}
+          {currentProduct ? (
             <div>
               <h4>Producto</h4>
               <div>
                 <label>
                   <strong>Id:</strong>
                 </label>{" "}
-                {currentTutorial.id}
+                {currentProduct.id}
               </div>
               <div>
                 <label>
                   <strong>Stock:</strong>
                 </label>{" "}
-                {currentTutorial.stock}
+                {currentProduct.stock}
               </div>
 
               <div>
                 <label>
                   <strong>Precio:</strong>
                 </label>{" "}
-                {currentTutorial.price}
+                {currentProduct.price}
               </div>
 
 
@@ -142,7 +133,7 @@ export default class ProductList extends Component {
               <Link
                 //Como hemos incluido en el switch esta ruta, /tutorials/+id se renderizará el componente
                 // tutorials cuando se pulse el enlace.
-                to={"/tutorials/" + currentTutorial.id}
+                to={"/products/" + currentProduct.id}
                 className="badge badge-warning"
               >
                 Edit

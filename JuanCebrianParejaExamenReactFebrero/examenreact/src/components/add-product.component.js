@@ -1,71 +1,68 @@
 import React, { Component } from "react";
 import ProductDataService from "../services/product.service";
 
-export default class AddTutorial extends Component {
+export default class AddProduct extends Component {
     
     constructor(props) {
         super(props);
-        this.onChangeTitle = this.onChangeTitle.bind(this);
-        this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.publishedChange = this.publishedChange.bind(this);
-        this.addTutorial = this.addTutorial.bind(this);
+        this.onChangeId = this.onChangeId.bind(this);
+        this.onChangeStock = this.onChangeStock.bind(this);
+        this.onChangePrice = this.onChangePrice.bind(this);
+        this.addProduct = this.addProduct.bind(this);
 
         this.state = {
-            currentTutorial: {
+            currentProduct: {
                 id: null,
-                title: "",
-                description: "",
-                published: false
+                stock: 0,
+                price: 0
             },
             message: ""
         };
     }
 
-    onChangeTitle(e) {
-        const title = e.target.value;
+    onChangeId(e) {
+        const id = e.target.value;
 
         this.setState(function (prevState) {
             return {
-                currentTutorial: {
-                    ...prevState.currentTutorial,
-                    title: title
+                currentProduct: {
+                    ...prevState.currentProduct,
+                    id: id
                 }
             };
         });
     }
 
-    onChangeDescription(e) {
-        const description = e.target.value;
+    onChangeStock(e) {
+        const stock = e.target.value;
 
         this.setState(prevState => ({
-            currentTutorial: {
-                ...prevState.currentTutorial,
-                description: description
+            currentProduct: {
+                ...prevState.currentProduct,
+                stock: stock
             }
         }));
     }
 
-    publishedChange(e) {
-            const published = e.target.checked;
+    onChangePrice(e) {
+        const price = e.target.value;
 
-            this.setState(function (prevState) {
-                return {
-                    currentTutorial: {
-                        ...prevState.currentTutorial,
-                        published: published
-                    }
-                };
-            });
+        this.setState(prevState => ({
+            currentProduct: {
+                ...prevState.currentProduct,
+                price: price
+            }
+        }));
     }
 
-    addTutorial() {
+    addProduct() {
         ProductDataService.create(
-            this.state.currentTutorial
+            this.state.currentProduct
         )
             .then(response => {
                 console.log(response.data);
                 this.setState({
-                    message: "The tutorial was created successfully!"
+                    message: "Nuevo producto añadido a la base de datos!"
                 });
             })
             .catch(e => {
@@ -80,40 +77,44 @@ export default class AddTutorial extends Component {
                         <h4>Tutorial</h4>
                         <form>
                             <div className="form-group">
-                                <label htmlFor="title">Title</label>
+                                <label htmlFor="id">ID</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="title"
-                                    value={this.state.title}
-                                    onChange={this.onChangeTitle}
+                                    id="id"
+                                    value={this.state.id}
+                                    onChange={this.onChangeId}
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="description">Description</label>
+                                <label htmlFor="stock">Stock</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="description"
-                                    value={this.state.description}
-                                    onChange={this.onChangeDescription}
+                                    id="stock"
+                                    value={this.state.stock}
+                                    onChange={this.onChangeStock}
                                 />
                             </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" checked={this.state.published} onChange={this.publishedChange}/>
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Published
-                                    </label>
+                            <div className="form-group">
+                                <label htmlFor="price">Price</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="price"
+                                    value={this.state.price}
+                                    onChange={this.onChangePrice}
+                                />
                             </div>
                         </form><br></br>
 
                         <button
                             type="submit"
                             className="badge badge-success"
-                            onClick={this.addTutorial}
+                            onClick={this.addProduct}
                         >
-                            Add
+                            Añadir
                         </button>
                         <p>{this.state.message}</p>
                     </div>
