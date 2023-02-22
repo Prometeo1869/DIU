@@ -7,11 +7,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <nav className="navbar navbar-expand navbar-dark bg-dark text-info">
           {/*<Link to={"/persons"} className="navbar-brand">
             Agenda
   </Link>*/}
-  <h1 className="text-white p-auto">AGENDA</h1>
+  <h1 className="p-auto">AGENDA</h1>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
               {/*<Link to={"/persons"} className="nav-link">
