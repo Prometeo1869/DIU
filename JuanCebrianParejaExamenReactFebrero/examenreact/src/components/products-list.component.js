@@ -8,7 +8,8 @@ export default class ProductList extends Component {
     this.retrieveProducts = this.retrieveProducts.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveProduct = this.setActiveProduct.bind(this);
-    //this.removeAllTutorials = this.removeAllTutorials.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.suma10 = this.suma10.bind(this);
     
 
     //Hacemos el bind de los métodos porque al usar estos métodos en gestores de eventos los componentes basados
@@ -17,7 +18,8 @@ export default class ProductList extends Component {
       products: [],         //lista de productos
       currentProduct: null, //producto seleccionado de la lista
       currentIndex: -1,
-      searchTitle: ""
+      searchTitle: "",
+      value: 0
     };
   }
   //Cuando se carga el componente, se realiza la petición de productos a la API
@@ -43,7 +45,8 @@ export default class ProductList extends Component {
     this.retrieveProducts();
     this.setState({
       currentProduct: null,
-      currentIndex: -1
+      currentIndex: -1,
+      value: 0
     });
   }
 
@@ -54,16 +57,30 @@ export default class ProductList extends Component {
     });
   }
 
-  /*removeAllTutorials() {
-    ProductDataService.deleteAll()
-      .then(response => {
-        console.log(response.data);
-        this.refreshList();
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }*/
+  handleChange(e) {
+    this.setState({value: e.target.value});
+    
+  }
+
+  suma10() {
+
+    this.state.currentProduct.stock += 10;
+
+      ProductDataService.update(
+        this.state.currentProduct.id,
+        this.state.currentProduct
+      )
+        .then(response => {
+          console.log(response.data);
+          this.setState({
+            message: "El producto fue modificado!"
+          });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    
+  }
 
 
   render() {
@@ -75,25 +92,33 @@ export default class ProductList extends Component {
         <div className="col-md-6">
           <h4>Lista de Productos</h4>
 
-          <ul className="list-group">
+          <table className="table">
             {/*El operedor && lógico. Los dos elementos tienen que ser true, en este caso no vacio, para que se ejecute la sentencia */}
             {/*si tutorials está vacio , no se ejecuta el map*/}
-
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+              </tr>
+            </thead>
+            <tbody>
+              
             {products && //Si el array no está vacio
               products.map((producto, index) => (
-                <li
+                <tr
               /* Cambiamos la clase del elemento de la lista seleccionado. Ponemos fondo azul*/
                   className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
+                    "row-group-item " +
+                    (index === currentIndex ? "bg-primary text-white" : "")
                   }
                   onClick={() => this.setActiveProduct(producto, index)}
                   key={index}
-                >
-                  Producto {producto.id}
-                </li>
+                ><td scope="row">{producto.name} </td><td>{producto.price} €</td>
+                </tr>
               ))}
-          </ul>
+              
+          </tbody>
+          </table>
 
           {/*<button
             className="m-3 btn btn-sm btn-danger"
@@ -102,42 +127,63 @@ export default class ProductList extends Component {
             Borrar Todo
                 </button>*/}
         </div>
-        <div className="col-md-6">
+        
+        <div className="col-md-6 mt-5">
           {/*Renderizado condicional. Si current producto el null se dibuja lo de abajo. Si no,*/}
           {/*se dibuja "Please click on a Producto..." ver más abajo.*/}
           {currentProduct ? (
             <div>
-              <h4>Producto</h4>
+              <h4>{currentProduct.name}</h4>
+
               <div>
-                <label>
-                  <strong>Id:</strong>
+              <label>
+                  <strong>Unidades:</strong>
                 </label>{" "}
-                {currentProduct.id}
+              <input 
+                id="unidades"
+                type="number" 
+                class="form-control" 
+                placeholder="Introduce una cantidad" 
+                max={currentProduct.stock}
+                min="0"
+                value={this.state.value} 
+                onChange={this.handleChange}
+              />
               </div>
+              
+              <div className="mt-3">
+                <label>
+                  <strong>Total:</strong>
+                </label>{" "}
+                {this.state.value * currentProduct.price}€
+                
+              </div>
+              
               <div>
                 <label>
-                  <strong>Stock:</strong>
+                  <strong>Unidades en Stock:</strong>
                 </label>{" "}
                 {currentProduct.stock}
               </div>
 
               <div>
-                <label>
-                  <strong>Precio:</strong>
-                </label>{" "}
-                {currentProduct.price}
+                {(currentProduct.stock >= 10) ? 
+                <label className="text-success">
+                  Unidades ok                  
+                </label> 
+                :
+                <label className="text-danger">
+                Unidades bajas                  
+              </label> }   
+                
               </div>
-
-
-
-              <Link
-                //Como hemos incluido en el switch esta ruta, /tutorials/+id se renderizará el componente
-                // tutorials cuando se pulse el enlace.
-                to={"/products/" + currentProduct.id}
-                className="badge badge-warning"
+              <button
+                type="button" 
+                className="btn btn-warning mt-5"
+                onClick={this.suma10}
               >
-                Edit
-              </Link>
+                SUMAR 10 UNIDADES
+              </button>
               
             </div>
           ) : (
