@@ -3,6 +3,9 @@ import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 
+import PersonList from "./componentes/person-list.component";
+import TutorialsList from "./componentes/person-list.component";
+
 function App() {
   return (
     <div className="App">
@@ -27,16 +30,21 @@ function App() {
         </nav>
 
 
-        {/*<div className="container mt-3">
-          <Switch>
-            <Route exact path={["/", "/tutorials"]} component={TutorialsList} /> 
+        <div className="container mt-3">
+          {/*<Switch>
+            <Route exact path={["/", "/persons"]} component={TutorialsList} /> 
           <Route exact path="/add" component={AddTutorial} />
           <Route path="/tutorials/:id" component={Tutorial} />
-          </Switch>
-</div>*/}
+          </Switch>*/}
+</div>
 
 
       </header>
+      <main>
+        <div>
+          <TutorialsList></TutorialsList>
+        </div>
+      </main>
     </div>
   );
 }
