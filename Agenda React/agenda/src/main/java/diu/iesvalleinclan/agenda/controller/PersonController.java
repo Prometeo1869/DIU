@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 @CrossOrigin
@@ -24,6 +25,13 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createdPerson(person));
     }
 
+    @GetMapping("/persons/{id}")
+    public ResponseEntity<?> getPersonById(@PathVariable Integer id) {
+        PersonDTO dto = service.getById(id);
+
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping("/persons/{lastName}")
     public ResponseEntity<?> findByTitleContaining(@PathVariable String lastName) {
         List<PersonDTO> lista = service.getByLastName(lastName);
@@ -38,11 +46,30 @@ public class PersonController {
         return ResponseEntity.ok(lista);
     }
 
-    @GetMapping("/persons/{id}")
-    public ResponseEntity<?> getPersonById(@PathVariable Integer id) {
-        PersonDTO dto = service.getById(id);
+    @GetMapping("/persons_firstname")
+    public ResponseEntity<?> findSortFirstName() {
+        List<PersonDTO> lista = service.getPersons();
+        lista.sort(new Comparator<PersonDTO>() {
+            @Override
+            public int compare(PersonDTO o1, PersonDTO o2) {
+                return o1.getFirstName().compareToIgnoreCase(o2.getFirstName());
+            }
+        });
 
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/persons_lastname")
+    public ResponseEntity<?> findSortLastName() {
+        List<PersonDTO> lista = service.getPersons();
+        lista.sort(new Comparator<PersonDTO>() {
+            @Override
+            public int compare(PersonDTO o1, PersonDTO o2) {
+                return o1.getLastName().compareToIgnoreCase(o2.getLastName());
+            }
+        });
+
+        return ResponseEntity.ok(lista);
     }
 
     @PutMapping("/persons/{id}")
@@ -78,7 +105,7 @@ public class PersonController {
     /* POST EJEMPLO
             {
 	            "id" : 1,
-  	            "firtName" : "Juan",
+  	            "firstName" : "Juan",
               	"lastName" : "Cebrian",
   	            "street" : "Urquiza",
   	            "postalCode" : 41003,

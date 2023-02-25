@@ -1,20 +1,21 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 
-import PersonList from "./componentes/person-list.component";
-import TutorialsList from "./componentes/person-list.component";
+import { ListaContactos } from "./componentes/tabla_contactos.component";
+import { DetalleContacto } from "./componentes/detalle_contacto.component";
 
-function App() {
+
+export function App() {
   return (
-    <div className="App">
+    <Router>
       <header className="App-header">
-        <nav className="navbar navbar-expand navbar-dark bg-dark text-info">
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
           {/*<Link to={"/persons"} className="navbar-brand">
             Agenda
   </Link>*/}
-  <h1 className="p-auto">AGENDA</h1>
+          <h1 className="p-auto text-white">AGENDA</h1>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
               {/*<Link to={"/persons"} className="nav-link">
@@ -29,24 +30,17 @@ function App() {
           </div>
         </nav>
 
-
         <div className="container mt-3">
-          {/*<Switch>
-            <Route exact path={["/", "/persons"]} component={TutorialsList} /> 
-          <Route exact path="/add" component={AddTutorial} />
-          <Route path="/tutorials/:id" component={Tutorial} />
-          </Switch>*/}
-</div>
 
+        </div>
 
       </header>
       <main>
-        <div>
-          <TutorialsList></TutorialsList>
-        </div>
+        <Switch>
+          <Route exact path={["/", "/persons"]} component={ListaContactos} />
+          {/*<Route path="/persons/:id" component={DetalleContacto}></Route>*/}
+        </Switch>
       </main>
-    </div>
+    </Router>
   );
 }
-
-export default App;

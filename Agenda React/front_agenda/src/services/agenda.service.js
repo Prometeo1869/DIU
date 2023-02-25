@@ -1,16 +1,29 @@
 import http from "../http-common";
 
 class AgendaDataService {
+  
+  create(data) {
+    return http.post("/persons", data);
+  }
+
   getAll() {
     return http.get("/persons");
   }
 
-  get(id) {
+  findById(id) {
     return http.get(`/persons/${id}`);
   }
 
-  create(data) {
-    return http.post("/persons", data);
+  findByTitle(lastName) {
+    return http.get(`/persons/${lastName}`);
+  }
+
+  getSortFirstName() {
+    return http.get("/persons_firtname");
+  }
+
+  getSortLastName() {
+    return http.get("/persons_lastname");
   }
 
   update(id, data) {
@@ -25,9 +38,6 @@ class AgendaDataService {
     return http.delete(`/persons`);
   }
 
-  findByTitle(lastName) {
-    return http.get(`/persons/${lastName}`);
-  }
 }
 
 export default new AgendaDataService();
