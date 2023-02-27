@@ -19,7 +19,7 @@ class AgendaDataService {
   }
 
   getSortFirstName() {
-    return http.get("/persons_firtname");
+    return http.get("/persons_nameorder");
   }
 
   getSortLastName() {

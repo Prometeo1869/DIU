@@ -46,7 +46,7 @@ public class PersonController {
         return ResponseEntity.ok(lista);
     }
 
-    @GetMapping("/persons_firstname")
+    @GetMapping("/persons_nameorder")
     public ResponseEntity<?> findSortFirstName() {
         List<PersonDTO> lista = service.getPersons();
         lista.sort(new Comparator<PersonDTO>() {

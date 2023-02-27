@@ -10,6 +10,8 @@ export class ListaContactos extends Component {
     this.retrieveAgenda = this.retrieveAgenda.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActivePerson = this.setActivePerson.bind(this);
+    this.nameOrder = this.nameOrder.bind(this);
+    this.lastnameOrder = this.lastnameOrder.bind(this);
     //this.removeAllTutorials = this.removeAllTutorials.bind(this);
     //this.searchTitle = this.searchTitle.bind(this);
     //Hacemos el bind de los métodos porque al usar estos métodos en gestores de eventos los componentes basados
@@ -54,24 +56,50 @@ export class ListaContactos extends Component {
     });
   }
 
+  nameOrder() {
+    this.refreshList();
+    AgendaDataService.getSortFirstName()
+      .then(response => {
+        this.setState({
+          agenda: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  lastnameOrder() {
+    this.refreshList();
+    AgendaDataService.getSortLastName()
+      .then(response => {
+        this.setState({
+          agenda: response.data
+        });
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
   render() {
     //Convertir en variables los distintos elementos del state 
     const { agenda, currentPerson, currentIndex } = this.state;
 
     return (
       <div className="container mt-5">
-        <div className="list row">
-          <div className="col-5 m-1">
-            <DetalleContacto person={currentPerson}></DetalleContacto>
-          </div>
-          <div className="col-5 m-1">
+        <div className="list row justify-content-center">
+
+          <div className="col-5 m-ml-5">
             <table className="table">
               {/*El operedor && lógico. Los dos elementos tienen que ser true, en este caso no vacio, para que se ejecute la sentencia */}
               {/*si tutorials está vacio , no se ejecuta el map*/}
               <thead className="bg-danger text-white">
                 <tr>
-                  <th scope="col">NOMBRE</th>
-                  <th scope="col">APELLIDO</th>
+                  <th scope="col" onClick={this.nameOrder}>NOMBRE &nbsp;&nbsp; 🔽</th>
+                  <th scope="col"onClick={this.lastnameOrder}>APELLIDO &nbsp;&nbsp; 🔽</th>
                 </tr>
               </thead>
               <tbody>
@@ -92,6 +120,9 @@ export class ListaContactos extends Component {
                   ))}
               </tbody>
             </table>
+          </div>
+          <div className="col-5 m-md-5">
+            <DetalleContacto person={currentPerson} refresh={this.refreshList}></DetalleContacto>
           </div>
         </div>
       </div>
