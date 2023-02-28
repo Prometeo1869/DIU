@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import AgendaDataService from "../services/agenda.service"; //importa axios
 import { Link } from "react-router-dom";
-import { useState } from "react";
-
-
 
 export class DetalleContacto extends Component {
 
@@ -19,7 +16,7 @@ export class DetalleContacto extends Component {
   componentDidMount() { }
 
   deletePerson() {
-    if (window.confirm("¿Seguro que quieres eliminar el contacto?")) {
+    if (window.confirm("¿Seguro que deseas eliminar el contacto?")) {
       AgendaDataService.delete(this.props.person.id)
         .then(response => {
           console.log(response.data);
@@ -80,15 +77,12 @@ export class DetalleContacto extends Component {
           </div>
 
           <div className="mt-5">
-            <button type="button" className="btn btn-danger m-2"
-              onClick={this.deletePerson}>
+            <button type="button" className="btn btn-danger m-2" id="bt-borrar" onClick={this.deletePerson}>
               Borrar
             </button>
-
-            <button type="button" className="btn btn-success m-2">
+            <Link type="button" className="btn btn-success m-2" person={currentPerson} to={"/persons/" + currentPerson.id}>
               Editar
-            </button>
-
+            </Link>
           </div>
 
         </div>

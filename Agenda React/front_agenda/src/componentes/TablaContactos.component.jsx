@@ -1,30 +1,28 @@
 import React, { Component } from "react";
 import AgendaDataService from "../services/agenda.service"; //importa axios
 
-import { DetalleContacto } from "./detalle_contacto.component";
+import { DetalleContacto } from "./DetalleContacto.component";
+import styles from "../styles/TablaContactos.module.css";
+import ProgressBar from "./BarraProgreso.component";
 
 export class ListaContactos extends Component {
   constructor(props) {
     super(props);
-    //this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
     this.retrieveAgenda = this.retrieveAgenda.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActivePerson = this.setActivePerson.bind(this);
     this.nameOrder = this.nameOrder.bind(this);
     this.lastnameOrder = this.lastnameOrder.bind(this);
-    //this.removeAllTutorials = this.removeAllTutorials.bind(this);
-    //this.searchTitle = this.searchTitle.bind(this);
-    //Hacemos el bind de los métodos porque al usar estos métodos en gestores de eventos los componentes basados
-    //en clases pierden el ámbito.
+
     this.state = {
-      agenda: [], //lista de tutoriales
-      currentPerson: null, //tutorial seleccionado de la lista
+      agenda: [],           //lista de tutoriales
+      currentPerson: null,  //tutorial seleccionado de la lista
       currentIndex: -1
     };
   }
 
-  //Cuando se carga el componente, se realiza la petición de productos a la API
-  //El método retrieveProducts provoca la actualización del estado, y por tanto la re-renderización del componente
+  //Cuando se carga el componente, se realiza la petición de contactos a la API
+  //El método retrieveAgenda provoca la actualización del estado, y por tanto la re-renderización del componente
   componentDidMount() {
     this.retrieveAgenda();
   }
@@ -41,6 +39,7 @@ export class ListaContactos extends Component {
         console.log(e);
       });
   }
+
   setActivePerson(person, index) {
     this.setState({
       currentPerson: person,
@@ -93,23 +92,23 @@ export class ListaContactos extends Component {
         <div className="list row justify-content-center">
 
           <div className="col-5 m-ml-5">
-            <table className="table">
+            <table className="table table-hover">
               {/*El operedor && lógico. Los dos elementos tienen que ser true, en este caso no vacio, para que se ejecute la sentencia */}
               {/*si tutorials está vacio , no se ejecuta el map*/}
               <thead className="bg-danger text-white">
-                <tr>
-                  <th scope="col" onClick={this.nameOrder}>NOMBRE &nbsp;&nbsp; 🔽</th>
-                  <th scope="col"onClick={this.lastnameOrder}>APELLIDO &nbsp;&nbsp; 🔽</th>
+                <tr className={styles.puntero_mano} >
+                  <th scope="col" onClick={this.nameOrder} title="Ordena por nombre">NOMBRE &nbsp;&nbsp;🔻</th>
+                  <th scope="col" onClick={this.lastnameOrder} title="Ordena por apellido">APELLIDO &nbsp;&nbsp; 🔻</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className={styles.puntero_mano}>
                 {agenda && //Si el array no está vacio
                   agenda.map((persona, index) => (
                     <tr
                       // Cambiamos la clase del elemento de la lista seleccionado. Ponemos fondo azul
                       className={
                         "row-group-item " +
-                        (index === currentIndex ? "bg-success text-white" : "")
+                        (index === currentIndex ? "bg-info text-dark" : "")
                       }
                       onClick={() => this.setActivePerson(persona, index)}
                       key={index}
@@ -120,10 +119,14 @@ export class ListaContactos extends Component {
                   ))}
               </tbody>
             </table>
+            <ProgressBar total={agenda.length}></ProgressBar>
           </div>
           <div className="col-5 m-md-5">
             <DetalleContacto person={currentPerson} refresh={this.refreshList}></DetalleContacto>
           </div>
+        </div>
+        <div className="col-5 m-ml-5">
+            
         </div>
       </div>
     );

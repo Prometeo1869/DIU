@@ -29,10 +29,14 @@ public class PersonController {
     public ResponseEntity<?> getPersonById(@PathVariable Integer id) {
         PersonDTO dto = service.getById(id);
 
-        return ResponseEntity.ok(dto);
+        if(dto == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(dto);
+        }
     }
 
-    @GetMapping("/persons/{lastName}")
+    @GetMapping("/persons/name/{lastName}")
     public ResponseEntity<?> findByTitleContaining(@PathVariable String lastName) {
         List<PersonDTO> lista = service.getByLastName(lastName);
 

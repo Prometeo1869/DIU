@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import './App.css';
+import './styles/App.css';
 
-import { ListaContactos } from "./componentes/tabla_contactos.component";
-import { DetalleContacto } from "./componentes/detalle_contacto.component";
+import { ListaContactos } from "./componentes/TablaContactos.component";
+import { EditaContacto } from "./componentes/Editar.component";
 
 
 export function App() {
@@ -16,16 +16,16 @@ export function App() {
             Agenda
   </Link>*/}
           <h1 className="p-auto text-white">AGENDA</h1>
-          <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              {/*<Link to={"/persons"} className="nav-link">
-                Personas
-</Link>*/}
+          <div className="navbar-nav mx-5">
+            <li className="nav-item mx-2">
+              <Link to={"/persons"} className="nav-link">
+                <h5 className="text-warning">Contactos</h5>
+              </Link>
             </li>
-            <li className="nav-item">
-              {/*<Link to={"/add"} className="nav-link">
-                Add
-</Link>*/}
+            <li className="nav-item mx-2">
+              <Link to={"/add"} className="nav-link">
+                <h5 className="text-warning">Añadir</h5>
+              </Link>
             </li>
           </div>
         </nav>
@@ -38,9 +38,11 @@ export function App() {
       <main>
         <Switch>
           <Route exact path={["/", "/persons"]} component={ListaContactos} />
-          {/*<Route path="/persons/:id" component={DetalleContacto}></Route>*/}
+          <Route path="/persons/:id" component={EditaContacto}></Route>
         </Switch>
       </main>
     </Router>
+
+
   );
 }
