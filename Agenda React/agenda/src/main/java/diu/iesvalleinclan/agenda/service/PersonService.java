@@ -12,13 +12,13 @@ public interface PersonService {
 
     List<PersonDTO> getPersons();
 
-    PersonDTO getById(Integer id);
+    PersonDTO getById(String id);
 
-    PersonDTO updatePerson(Integer id, PersonDTO dto);
+    PersonDTO updatePerson(String id, PersonDTO dto);
 
-    boolean exist(Integer id);
+    boolean exist(String id);
 
-    void deletePerson(Integer id);
+    void deletePerson(String id);
 
     long count();
 

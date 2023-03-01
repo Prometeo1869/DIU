@@ -2,6 +2,7 @@ package diu.iesvalleinclan.agenda.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
+import lombok.Generated;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @Data
 public class Person {
     @Id
-    private Integer id;
+    private String id;
 
     private String firstName;
     private String lastName;

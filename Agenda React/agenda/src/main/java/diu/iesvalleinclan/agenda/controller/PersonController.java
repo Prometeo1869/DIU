@@ -26,7 +26,7 @@ public class PersonController {
     }
 
     @GetMapping("/persons/{id}")
-    public ResponseEntity<?> getPersonById(@PathVariable Integer id) {
+    public ResponseEntity<?> getPersonById(@PathVariable String id) {
         PersonDTO dto = service.getById(id);
 
         if(dto == null) {
@@ -77,7 +77,7 @@ public class PersonController {
     }
 
     @PutMapping("/persons/{id}")
-    public ResponseEntity<?> updatePerson(@PathVariable Integer id, @RequestBody PersonDTO dto) {
+    public ResponseEntity<?> updatePerson(@PathVariable String id, @RequestBody PersonDTO dto) {
         PersonDTO updating = service.updatePerson(id, dto);
         if (updating == null) {
             return ResponseEntity.notFound().build();
@@ -87,7 +87,7 @@ public class PersonController {
     }
 
     @DeleteMapping("/persons/{id}")
-    public ResponseEntity<?> deletePersonById(@PathVariable Integer id) {
+    public ResponseEntity<?> deletePersonById(@PathVariable String id) {
         if (service.exist(id)) {
             service.deletePerson(id);
             return ResponseEntity.noContent().build();
@@ -108,7 +108,7 @@ public class PersonController {
 
     /* POST EJEMPLO
             {
-	            "id" : 1,
+	            "id" : "1",
   	            "firstName" : "Juan",
               	"lastName" : "Cebrian",
   	            "street" : "Urquiza",

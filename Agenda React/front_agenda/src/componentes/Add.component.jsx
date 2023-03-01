@@ -1,23 +1,22 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import AgendaDataService from "../services/agenda.service"; //importa axios
 import { Link } from "react-router-dom";
+import { Alert } from "bootstrap";
 
-export class EditaContacto extends Component {
+export class AddContacto extends Component {
 
     constructor(props) {
         super(props);
-        this.getPerson = this.getPerson.bind(this);
         this.onChangeFirstName = this.onChangeFirstName.bind(this);
         this.onChangeLastName = this.onChangeLastName.bind(this);
         this.onChangeStreet = this.onChangeStreet.bind(this);
         this.onChangePostalCode = this.onChangePostalCode.bind(this);
         this.onChangeCity = this.onChangeCity.bind(this);
         this.onChangeBirthday = this.onChangeBirthday.bind(this);
-        this.updatePerson = this.updatePerson.bind(this);
+        this.createPerson = this.createPerson.bind(this);
 
         this.state = {
             currentPerson: {
-                id: "",
                 firstName: "",
                 lastName: "",
                 street: "",
@@ -26,25 +25,10 @@ export class EditaContacto extends Component {
                 birthday: ""
             },
             message: ""
-        };
+        }
     }
 
-    componentDidMount() {
-        this.getPerson(this.props.match.params.id);
-    }
-
-    getPerson(id) {
-        AgendaDataService.findById(id)
-            .then(response => {
-                this.setState({
-                    currentPerson: response.data
-                });
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    }
+    componentDidMount() { }
 
     onChangeFirstName(e) {
         const firstName = e.target.value;
@@ -124,15 +108,15 @@ export class EditaContacto extends Component {
         });
     }
 
-    updatePerson() {
-        AgendaDataService.update(
-            this.state.currentPerson.id,
+    createPerson() {
+
+        AgendaDataService.create(
             this.state.currentPerson
         )
             .then(response => {
                 console.log(response.data);
                 this.setState({
-                    message: "¡¡CONTACTO EDITADO CON ÉXITO!!"
+                    message: "¡¡CONTACTO CREADO CON ÉXITO!!"
                 });
             })
             .catch(e => {
@@ -142,11 +126,12 @@ export class EditaContacto extends Component {
 
 
     render() {
-        const { currentPerson } = this.state;
-        
+        const { currentPerson, message } = this.state;
+
+
         return (
             <div className="list row justify-content-center mt-5" >
-            
+
                 {/*-- Card --*/}
                 <div className="card col-5">
 
@@ -155,7 +140,7 @@ export class EditaContacto extends Component {
 
                         {/*-- Formulario editar contacto --*/}
                         <form className="form-group">
-                            <p className="h4 text-center py-4">Modifica Contacto</p>
+                            <p className="h4 text-center py-4">Nuevo Contacto</p>
 
                             {/*-- Nombre input text --*/}
                             <div>
@@ -236,7 +221,7 @@ export class EditaContacto extends Component {
 
 
                             <div className="text-center py-4 mt-3">
-                                <Link className="btn btn-success mx-5" type="button" onClick={this.updatePerson} to={'/'}>Guardar</Link>
+                                <button className="btn btn-success mx-5" type="button" onClick={this.createPerson} to={'/'}>Guardar</button>
                                 <Link className="btn btn-danger mx-5" type="button" to={'/persons'}>Cancelar</Link>
                             </div>
 
@@ -245,12 +230,14 @@ export class EditaContacto extends Component {
 
                         {/*-- Card body --*/}
                     </div>
-                    <div>
-                        <p className="bg-warning text-center"><strong>{this.state.message}</strong></p>
+                    <div className={"" + (message ? "bg-warning" : "") + " text-dark row rounded"} role="alertdialog">
+                        <p className="text-center align-middle"><strong>{message}</strong></p>
                     </div>
                 </div>
                 {/*-- Fin Card --*/}
             </div>
         );
     }
+
+
 }

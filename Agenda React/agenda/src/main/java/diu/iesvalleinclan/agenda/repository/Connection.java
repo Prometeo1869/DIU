@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface Connection extends MongoRepository<Person, Integer> {
+public interface Connection extends MongoRepository<Person, String> {
     List<Person> findByLastName(String lastName);
 }

@@ -33,13 +33,13 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonDTO getById(Integer id) {
+    public PersonDTO getById(String id) {
         Person person = conn.findById(id).orElse(null);
         return person != null ? mapper.convertToDTO(person) : null;
     }
 
     @Override
-    public PersonDTO updatePerson(Integer id, PersonDTO dto) {
+    public PersonDTO updatePerson(String id, PersonDTO dto) {
         Person updating = conn.findById(id).orElse(null);
         if (updating == null) {
             return null;
@@ -56,12 +56,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public boolean exist(Integer id) {
+    public boolean exist(String id) {
         return conn.existsById(id);
     }
 
     @Override
-    public void deletePerson(Integer id) {
+    public void deletePerson(String id) {
         conn.deleteById(id);
     }
 

@@ -5,6 +5,7 @@ import './styles/App.css';
 
 import { ListaContactos } from "./componentes/TablaContactos.component";
 import { EditaContacto } from "./componentes/Editar.component";
+import { AddContacto } from "./componentes/Add.component";
 
 
 export function App() {
@@ -39,6 +40,7 @@ export function App() {
         <Switch>
           <Route exact path={["/", "/persons"]} component={ListaContactos} />
           <Route path="/persons/:id" component={EditaContacto}></Route>
+          <Route path="/add" component={AddContacto}></Route>
         </Switch>
       </main>
     </Router>

@@ -1,6 +1,7 @@
 package diu.iesvalleinclan.agenda.model.dto;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
 
@@ -10,7 +11,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonDTO {
-    private Integer id;
+
+    @Id
+    private String id;
 
     private String firstName;
     private String lastName;
