@@ -88,47 +88,61 @@ export class ListaContactos extends Component {
     const { agenda, currentPerson, currentIndex } = this.state;
 
     return (
-      <div className="container mt-5">
-        <div className="list row justify-content-center">
+      <div>
+      {agenda ? (
+        <div className="container mt-5">
+          <div className="list row justify-content-center">
 
+            <div className="col-5 m-ml-5">
+              <table className="table table-hover">
+                {/*El operedor && lógico. Los dos elementos tienen que ser true, en este caso no vacio, para que se ejecute la sentencia */}
+                {/*si tutorials está vacio , no se ejecuta el map*/}
+                <thead className="bg-danger text-white">
+                  <tr className={styles.puntero_mano} >
+                    <th scope="col" onClick={this.nameOrder} title="Ordena por nombre">NOMBRE &nbsp;&nbsp;🔻</th>
+                    <th scope="col" onClick={this.lastnameOrder} title="Ordena por apellido">APELLIDO &nbsp;&nbsp; 🔻</th>
+                  </tr>
+                </thead>
+                <tbody className={styles.puntero_mano}>
+                  {agenda && //Si el array no está vacio
+                    agenda.map((persona, index) => (
+                      <tr
+                        // Cambiamos la clase del elemento de la lista seleccionado. Ponemos fondo azul
+                        className={
+                          "row-group-item " +
+                          (index === currentIndex ? "bg-info text-dark" : "")
+                        }
+                        onClick={() => this.setActivePerson(persona, index)}
+                        key={index}
+                      >
+                        <td scope="row">{persona.firstName} </td>
+                        <td>{persona.lastName}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+              <ProgressBar total={agenda.length}></ProgressBar>
+            </div>
+            <div className="col-5 m-md-5">
+              <DetalleContacto person={currentPerson} refresh={this.refreshList}></DetalleContacto>
+            </div>
+          </div>
           <div className="col-5 m-ml-5">
-            <table className="table table-hover">
-              {/*El operedor && lógico. Los dos elementos tienen que ser true, en este caso no vacio, para que se ejecute la sentencia */}
-              {/*si tutorials está vacio , no se ejecuta el map*/}
-              <thead className="bg-danger text-white">
-                <tr className={styles.puntero_mano} >
-                  <th scope="col" onClick={this.nameOrder} title="Ordena por nombre">NOMBRE &nbsp;&nbsp;🔻</th>
-                  <th scope="col" onClick={this.lastnameOrder} title="Ordena por apellido">APELLIDO &nbsp;&nbsp; 🔻</th>
-                </tr>
-              </thead>
-              <tbody className={styles.puntero_mano}>
-                {agenda && //Si el array no está vacio
-                  agenda.map((persona, index) => (
-                    <tr
-                      // Cambiamos la clase del elemento de la lista seleccionado. Ponemos fondo azul
-                      className={
-                        "row-group-item " +
-                        (index === currentIndex ? "bg-info text-dark" : "")
-                      }
-                      onClick={() => this.setActivePerson(persona, index)}
-                      key={index}
-                    >
-                      <td scope="row">{persona.firstName} </td>
-                      <td>{persona.lastName}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-            <ProgressBar total={agenda.length}></ProgressBar>
-          </div>
-          <div className="col-5 m-md-5">
-            <DetalleContacto person={currentPerson} refresh={this.refreshList}></DetalleContacto>
+
           </div>
         </div>
-        <div className="col-5 m-ml-5">
-            
+      ) : (
+        <div className="card">
+          <div className="card-header">
+            Featured
+          </div>
+          <div className="card-body">
+            <h5 className="card-title">¡ERROR!</h5>
+            <p className="card-text">No se ha podido establecer la conexión con la Base de Datos</p>
+          </div>
         </div>
-      </div>
+        )}
+        </div>
     );
   }
 }

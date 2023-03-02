@@ -152,7 +152,7 @@ export class AddContacto extends Component {
                                         className="form-control"
                                         value={currentPerson.firstName}
                                         onChange={this.onChangeFirstName}
-                                        required />
+                                        required="required" />
                                 </div>
                             </div>
                             {/*-- Apellido input text --*/}

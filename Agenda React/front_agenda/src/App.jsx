@@ -13,10 +13,9 @@ export function App() {
     <Router>
       <header className="App-header">
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-          {/*<Link to={"/persons"} className="navbar-brand">
-            Agenda
-  </Link>*/}
-          <h1 className="p-auto text-white">AGENDA</h1>
+          <Link to={"/"} className="navbar-brand">
+            <h1 className="p-auto text-white">AGENDA</h1>
+          </Link>
           <div className="navbar-nav mx-5">
             <li className="nav-item mx-2">
               <Link to={"/persons"} className="nav-link">
@@ -28,6 +27,9 @@ export function App() {
                 <h5 className="text-warning">Añadir</h5>
               </Link>
             </li>
+          </div>
+          <div className="login-container navbar-nav mx-5 text-light justify-self-end">
+            Login
           </div>
         </nav>
 
