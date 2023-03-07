@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import AgendaDataService from "../services/agenda.service"; //importa axios
 import { Link } from "react-router-dom";
 
@@ -143,6 +143,7 @@ export class EditaContacto extends Component {
 
     render() {
         const { currentPerson } = this.state;
+        
         
         return (
             <div className="list row justify-content-center mt-5" >

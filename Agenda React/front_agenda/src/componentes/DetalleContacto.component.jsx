@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import AgendaDataService from "../services/agenda.service"; //importa axios
 import { Link } from "react-router-dom";
+import { UserContext } from "../providers/UserProvider";
 
 export class DetalleContacto extends Component {
+
+  static contextType = UserContext;
 
   constructor(props) {
     super(props);
@@ -32,6 +35,7 @@ export class DetalleContacto extends Component {
   render() {
     const currentPerson = this.props.person;
     const f = i => currentPerson.birthday.charAt(i);
+    const user = this.context;
 
     return (<div>
 
@@ -75,7 +79,8 @@ export class DetalleContacto extends Component {
             </label>{" "}
             {f(8) + f(9) + "/" + f(5) + f(6) + "/" + f(0) + f(1) + f(2) + f(3)}
           </div>
-
+          
+          {user ? (
           <div className="mt-5">
             <button type="button" className="btn btn-danger m-2" id="bt-borrar" onClick={this.deletePerson}>
               Borrar
@@ -84,7 +89,7 @@ export class DetalleContacto extends Component {
               Editar
             </Link>
           </div>
-
+) : (<div></div>)}
         </div>
       ) : (
         <div>
@@ -97,4 +102,4 @@ export class DetalleContacto extends Component {
   }
 }
 
-
+DetalleContacto.contextType = UserContext;
