@@ -30,7 +30,7 @@ const SignIn = () => {
 
 
   return (
-<div className="navbar-nav mx-5 col-4">
+<div className="navbar-nav mx-5 col-4 justify-content-end align-self-center">
       <div className="nav-item mx-2">
         <form className="form-group">      
           <div className="input-group m-2">

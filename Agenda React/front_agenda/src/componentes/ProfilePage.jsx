@@ -10,23 +10,25 @@ const ProfilePage = () => {
   
 
   return (
-    <div className = "">
-      <div className="flex border flex-col items-center md:flex-row md:items-start border-blue-400 px-3 py-4">
-        <div
+    <div className="navbar-nav mx-5 col-4 justify-content-end align-self-center">
+      <ul className="list-group list-group-horizontal d-flex align-items-center">
+        <li
           style={{
             background: `url(${photoURL || 'https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg'})  no-repeat center center`,
             backgroundSize: "cover",
-            height: "200px",
-            width: "200px"
+            height: "50px",
+            width: "50px"
           }}
-          className=""
-        ></div>
-        <div className = "md:pl-4">
-        <h2 className = "text-2xl text-light font-semibold">{displayName}</h2>
-        <h3 className = "italic text-light">{email}</h3>
-        </div>
-      </div>
-      <button className = "w-full py-3 bg-red-600 mt-4 text-white" onClick = {() => {auth.signOut()}}>Sign out</button>
+          className="list-group-item align-middle bg-dark"
+        ></li>
+        <li className="list-group-item align-middle bg-dark">
+        <h2 className="text-l text-light font-semibold">{displayName}</h2>
+        {/*<h3 className="italic text-light">{email}</h3>*/}
+        </li>
+      <li className="list-group-item bg-dark">
+      <button className="btn btn-danger" onClick = {() => {auth.signOut()}}>Cerrar sesión</button>
+      </li>
+      </ul>
     </div>
   ) 
 };
